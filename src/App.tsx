@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import {
   Routes,
   Route,
@@ -34,6 +34,8 @@ import Tutorial_page from "./components/Tutorial_page";
 
 type BillingCycle = "monthly" | "quarterly" | "half-yearly" | "yearly";
 
+const TUTORIAL_ONLY_MODE = true;
+
 /* ---------------- SCROLL HANDLER ---------------- */
 
 function SectionRedirect({ sectionId }: { sectionId: string }) {
@@ -59,6 +61,18 @@ function SectionRedirect({ sectionId }: { sectionId: string }) {
   }, [navigate, sectionId]);
 
   return null;
+}
+function TutorialOnlyGuard({ children }: { children: JSX.Element }) {
+  const location = useLocation();
+
+  if (
+    TUTORIAL_ONLY_MODE &&
+    location.pathname !== "/tutorials"
+  ) {
+    return <Navigate to="/tutorials" replace />;
+  }
+
+  return children;
 }
 
 /* ---------------- MAIN APP ---------------- */
@@ -179,7 +193,7 @@ export default function App() {
       {!hideNavbar && (
         <Navbar onLoginClick={() => setLoginModalOpen(true)} />
       )}
-
+    <TutorialOnlyGuard>
       <Routes>
         {/* Main page */}
         <Route path="/" element={<HomePage />} />
@@ -222,6 +236,7 @@ export default function App() {
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+    </TutorialOnlyGuard>
 
       <LoginModal
         open={loginModalOpen}
