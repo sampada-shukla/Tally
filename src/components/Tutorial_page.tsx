@@ -60,93 +60,39 @@ const screenshotBoxStyles = [
 
 const tutorialSections = [
   {
-    sectionId: 1,
-    sectionTitle: '🧑‍💼1: Admin Registration & License Setup',
-    sectionDescription:
-      'Initial system onboarding where the Admin registers, activates the license, and securely sets up credentials.',
-    steps: [
-      {
-        number: 1,
-        title: 'Admin Registration',
-        description:
-          'The Admin registers on the Tally Connector portal by providing basic credentials. This step initializes the organization’s account and enables access to the platform.',
-        icon: UserPlus,
-        iconColor: '#2196F3',
-        image: login_page,
-      },
-      {
-        number: 2,
-        title: 'License Activation',
-        description:
-          'A valid subscription license is activated to unlock dashboard features and enable secure data connectivity between Tally Prime and the cloud system.',
-        icon: CreditCard,
-        iconColor: '#4CAF50',
-        image: login_page,
-      },
-      {
-        number: 3,
-        title: 'Admin Credentials Creation',
-        description:
-          'The Admin finalizes a secure username and password, which will be used for both portal access and agent authentication.',
-        icon: Shield,
-        iconColor: '#1976D2',
-        image: login_page,
-      },
-      {
-        number: 4,
-        title: 'Secure Credential Storage',
-        description:
-          'All credentials are securely encrypted and stored with role-based access control to prevent unauthorized usage',
-        icon: HardDrive,
-        iconColor: '#607D8B',
-        image: login_page,
-      },
-    ],
-  },
+  sectionId: 1,
+  sectionTitle: '🧑‍💼 1: Admin Registration & License Setup',
+  sectionDescription:
+    'Initial system onboarding where the Admin registers, activates the license, and securely sets up credentials.',
+  steps: [
+    {
+      number: 1,
+      title: 'Admin Registration, License Activation & Credential Setup',
+      description:'The Admin completes registration, license activation, and secure credential setup to access the dashboard.',
+      icon: Shield,
+      iconColor: '#1976D2',
+      image: login_page,
+    },
+  ],
+},
   {
-    sectionId: 2,
-    sectionTitle: '🖥️ 2: Agent Setup & Authentication',
-    sectionDescription:
-      'Agent installation and authentication for real-time sync.',
-    steps: [
-      {
-        number: 5,
-        title: 'Download Agent',
-        description:
-          'The Admin downloads the desktop agent from the dashboard. This agent acts as a secure bridge between Tally Prime and the cloud platform.',
-        icon: Users,
-        iconColor: '#673AB7',
-        image: dashboard_page,
-      },
-      {
-        number: 6,
-        title: 'Install Agent',
-        description:
-          'The agent is installed on the system where Tally Prime is running, ensuring seamless access to accounting data.',
-        icon: Settings,
-        iconColor: '#009688',
-        image: dashboard_page,
-      },
-      {
-        number: 7,
-        title: 'Agent Login',
-        description:
-          'The agent is authenticated using Admin credentials to establish a trusted connection with the cloud server.',
-        icon: UserCircle,
-        iconColor: '#3F51B5',
-        image: login_page,
-      },
-      {
-        number: 8,
-        title: 'Credential Validation',
-        description:
-          'Once credentials are validated, the system confirms authentication and prepares the environment for data synchronization.',
-        icon: CheckCircle2,
-        iconColor: '#4CAF50',
-        image: dashboard_page,
-      },
-    ],
-  },
+  sectionId: 2,
+  sectionTitle: '🖥️ 2: Agent Setup & Authentication',
+  sectionDescription:
+    'Agent installation and authentication for real-time synchronization.',
+  steps: [
+    {
+      number: 2,
+      title: 'Agent Download, Installation & Authentication',
+      description:
+        'The Admin downloads, installs, and authenticates the desktop agent to enable secure real-time data synchronization.',
+      icon: Users,
+      iconColor: '#673AB7',
+      image: dashboard_page,
+    },
+  ],
+},
+
   {
     sectionId: 3,
     sectionTitle: '🔄 3: Data Sync & Login Routing',
