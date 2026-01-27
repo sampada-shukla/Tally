@@ -61,7 +61,7 @@ const screenshotBoxStyles = [
 const tutorialSections = [
   {
   sectionId: 1,
-  sectionTitle: '🧑‍💼 1: Admin Registration & License Setup',
+  sectionTitle: '1: Admin Registration & License Setup',
   sectionDescription:
     'Initial system onboarding where the Admin registers, activates the license, and securely sets up credentials.',
   steps: [
@@ -77,7 +77,7 @@ const tutorialSections = [
 },
   {
   sectionId: 2,
-  sectionTitle: '🖥️ 2: Agent Setup & Authentication',
+  sectionTitle: '2: Agent Setup & Authentication',
   sectionDescription:
     'Agent installation and authentication for real-time synchronization.',
   steps: [
@@ -95,7 +95,7 @@ const tutorialSections = [
 
   {
     sectionId: 3,
-    sectionTitle: '🔄 3: Data Sync & Login Routing',
+    sectionTitle: '3: Data Sync & Login Routing',
     sectionDescription:
       'Data synchronization and login routing.',
     steps: [
@@ -122,7 +122,7 @@ const tutorialSections = [
   
 {
   sectionId: 4,
-  sectionTitle: '🔐 4: Role-Based Access Control',
+  sectionTitle: '4: Role-Based Access Control',
   sectionDescription:
     'Admins define and manage user roles, permissions, and dashboard access to ensure secure and controlled system usage.',
   steps: [
@@ -182,559 +182,380 @@ const tutorialSections = [
 
 export default function TutorialPage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [activeImageIndex, setActiveImageIndex] = useState<{ [key: number]: number }>({});
-  const [popupSide, setPopupSide] = useState('right');
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveImageIndex((prev) => {
-        const updated = { ...prev };
-        tutorialSections.forEach((section) => {
-          section.steps.forEach((step) => {
-            if (step.multiImages && step.images) {
-              const currentIndex = updated[step.number] ?? 0;
-              updated[step.number] = (currentIndex + 1) % step.images.length;
-            }
-          });
-        });
-        return updated;
-      });
-    }, 3000); // Change image every 3 seconds
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
-    <div style={{ minHeight: '100vh', background: 'white', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #e0f7fa 0%, #ffffff 40%, #ffffff 100%)', position: 'relative' }}>
       {/* Background */}
       <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom right, white, rgb(236, 254, 255), white)', opacity: 0.8 }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(224,247,250,0.3) 0%, rgba(255,255,255,0) 50%)', opacity: 0.6 }} />
       </div>
 
       <div style={{ position: 'relative', zIndex: 10 }}>
-        {/* Hero Section with Left-Right Layout */}
-        <section style={{ padding: '3rem 1rem' }}>
-          <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+        {/* Hero Section */}
+        <section style={{ padding: '3rem 1.5rem', minHeight: '500px', display: 'flex', alignItems: 'center', background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 1.5rem' }}>
             <div style={{ 
               display: 'grid', 
-              gridTemplateColumns: '1.2fr 1fr', 
-              gap: '6rem', 
+              gridTemplateColumns: '1.1fr 0.9fr', 
+              gap: '3rem', 
               alignItems: 'center' 
             }}>
               {/* LEFT: Text Content */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                  {/*<img src={logoImage} alt="MeetHub Logo" style={{ width: '7.5rem', height: '7.5rem', objectFit: 'contain' }} />*/}
-                </div>
-                
-                <h1 style={{ fontSize: '3.25rem', fontWeight: 800,marginBottom: '1.5rem',lineHeight: '1.1',letterSpacing: '-0.02em' }}>
-                  <span style={{ color: 'rgb(6, 182, 212)',fontWeight: 900 }}>Explore Tally Connect</span>{' '}
+              <div style={{ maxWidth: '650px' }}>
+                <h1 style={{ fontSize: '2.75rem', fontWeight: 800, marginBottom: '1rem', lineHeight: '1.15', letterSpacing: '-0.025em' }}>
+                  <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore Tally Connect</span>{' '}
                   <span style={{ color: 'rgb(30, 41, 59)' }}>with Detailed Step-by-Step Tutorials</span>
                 </h1>
                 
-                <p style={{ fontSize: '1.25rem',color: 'rgb(75, 85, 99)',marginBottom: '2rem',lineHeight: '1.7',maxWidth: '42rem' }}>
+                <p style={{ fontSize: '1.05rem', color: 'rgb(71, 85, 105)', marginBottom: '1.5rem', lineHeight: '1.65' }}>
                   Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials covering setup, configuration, and advanced features.
                 </p>
 
                 {/* Feature List */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                   {[
                     'Quick start guides for instant setup',
                     'Advanced feature walkthroughs',
                     'How it works steps for smooth onboarding',
                   ].map((feature) => (
-                    <div key={feature} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <CheckCircle style={{ width: '1.5rem', height: '1.5rem', color: 'rgb(6, 182, 212)', flexShrink: 0 }} />
-                      <span style={{ fontSize: '1.1rem', color: 'rgb(55, 65, 81)' }}>{feature}</span>
+                    <div key={feature} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                      <CheckCircle style={{ width: '1.25rem', height: '1.25rem', color: 'rgb(6, 182, 212)', flexShrink: 0 }} />
+                      <span style={{ fontSize: '1rem', color: 'rgb(51, 65, 85)', fontWeight: 500 }}>{feature}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* RIGHT: Video Card */}
-<motion.div
-  style={{
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center'
-  }}
-  animate={{ y: [0, -14, 0] }}
-  transition={{
-    duration: 4,
-    repeat: Infinity,
-    ease: 'easeInOut',
-  }}
->
-  <div
-    style={{
-      background: 'white',
-      borderRadius: '1.75rem',
-      boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.25)',
-      overflow: 'hidden',
-      border: '1px solid rgb(243, 244, 246)',
-      width: '100%',
-      maxWidth: '640px', // 🔥 INCREASED SIZE
-    }}
-  >
-    {/* VIDEO PREVIEW */}
-    <div
-      style={{
-        position: 'relative',
-        height: '300px', // 🔥 TALLER VIDEO AREA
-        background:
-          'linear-gradient(to bottom right, rgb(219, 234, 254), rgb(207, 250, 254))',
-      }}
-    >
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <button
-            style={{
-              width: '5.5rem',
-              height: '5.5rem',
-              background: 'rgb(6, 182, 212)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
-              border: 'none',
-              cursor: 'pointer',
-              margin: '0 auto 1.75rem',
-              transition: 'background 0.3s',
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = 'rgb(8, 145, 178)')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = 'rgb(6, 182, 212)')
-            }
-          >
-            <Play
-              style={{
-                width: '2.75rem',
-                height: '2.75rem',
-                color: 'white',
-                marginLeft: '0.25rem',
-              }}
-              fill="white"
-            />
-          </button>
+              <motion.div 
+                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                animate={{ y: [0, -12, 0] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                <div style={{
+                  background: 'white',
+                  borderRadius: '1.25rem',
+                  boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.2)',
+                  overflow: 'hidden',
+                  border: '1px solid rgb(226, 232, 240)',
+                  width: '100%',
+                  maxWidth: '480px',
+                }}>
+                  {/* VIDEO PREVIEW */}
+                  <div style={{
+                    position: 'relative',
+                    height: '240px',
+                    background: 'linear-gradient(to bottom right, rgb(219, 234, 254), rgb(207, 250, 254))',
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <button style={{
+                          width: '4.5rem',
+                          height: '4.5rem',
+                          background: 'rgb(6, 182, 212)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.35)',
+                          border: 'none',
+                          cursor: 'pointer',
+                          margin: '0 auto 1rem',
+                          transition: 'background 0.3s',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = 'rgb(8, 145, 178)'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'rgb(6, 182, 212)'}
+                        >
+                          <Play style={{ width: '2.25rem', height: '2.25rem', color: 'white', marginLeft: '0.25rem' }} fill="white" />
+                        </button>
 
-          <p
-            style={{
-              marginTop: '1.25rem',
-              color: 'rgb(55, 65, 81)',
-              fontWeight: 600,
-              fontSize: '1.15rem',
-            }}
-          >
-            Getting Started with Tally Connect
-          </p>
-          <p
-            style={{
-              fontSize: '0.9rem',
-              color: 'rgb(107, 114, 128)',
-              marginTop: '0.25rem',
-            }}
-          >
-            Duration: 5:32
-          </p>
-        </div>
-      </div>
-    </div>
+                        <p style={{ marginTop: '0.75rem', color: 'rgb(55, 65, 81)', fontWeight: 600, fontSize: '1rem' }}>
+                          Getting Started with Tally Connect
+                        </p>
+                        <p style={{ fontSize: '0.85rem', color: 'rgb(107, 114, 128)', marginTop: '0.25rem' }}>
+                          Duration: 5:32
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-    {/* VIDEO INFO */}
-    <div style={{ padding: '2.25rem' }}>
-      <h3
-        style={{
-          fontSize: '1.5rem',
-          color: 'rgb(30, 41, 59)',
-          marginBottom: '0.75rem',
-          fontWeight: 700,
-        }}
-      >
-        Welcome to Tally Connect Tutorial
-      </h3>
+                  {/* VIDEO INFO */}
+                  <div style={{ padding: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.25rem', color: 'rgb(30, 41, 59)', marginBottom: '0.65rem', fontWeight: 700 }}>
+                      Welcome to Tally Connect Tutorial
+                    </h3>
 
-      <p
-        style={{
-          color: 'rgb(75, 85, 99)',
-          marginBottom: '1.75rem',
-          lineHeight: '1.65',
-        }}
-      >
-        Learn how to set up your account, configure tracking parameters, and
-        start monitoring your assets in just a few minutes.
-      </p>
+                    <p style={{ color: 'rgb(75, 85, 99)', marginBottom: '1.25rem', lineHeight: '1.6', fontSize: '0.9rem' }}>
+                      Learn how to set up your account, configure tracking parameters, and start monitoring your assets in just a few minutes.
+                    </p>
 
-      <button
-        style={{
-          width: '100%',
-          padding: '0.85rem 1rem',
-          background: 'rgb(30, 41, 59)',
-          color: 'white',
-          borderRadius: '0.75rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '0.5rem',
-          boxShadow: '0 12px 18px -6px rgba(0, 0, 0, 0.15)',
-          border: 'none',
-          cursor: 'pointer',
-          fontWeight: 600,
-          transition: 'all 0.3s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = 'rgb(15, 23, 42)';
-          e.currentTarget.style.transform = 'translateY(-2px)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'rgb(30, 41, 59)';
-          e.currentTarget.style.transform = 'translateY(0)';
-        }}
-      >
-        Watch Full Tutorial Series
-        <ExternalLink style={{ width: '1.25rem', height: '1.25rem' }} />
-      </button>
-    </div>
-  </div>
-</motion.div>
- </div>
+                    <button style={{
+                      width: '100%',
+                      padding: '0.75rem 1rem',
+                      background: 'rgb(30, 41, 59)',
+                      color: 'white',
+                      borderRadius: '0.65rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem',
+                      boxShadow: '0 10px 15px -5px rgba(0, 0, 0, 0.15)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                      fontSize: '0.95rem',
+                      transition: 'all 0.3s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgb(15, 23, 42)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgb(30, 41, 59)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                    >
+                      Watch Full Tutorial Series
+                      <ExternalLink style={{ width: '1.125rem', height: '1.125rem' }} />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
+
         {/* Tutorial Section Header */}
-<section
-  style={{
-    padding: '3rem 1rem 2.5rem',
-    background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)',
-  }}
->
-  <div
-    style={{
-      maxWidth: '1100px',
-      margin: '0 auto',
-      textAlign: 'center',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: '2.4rem',
-        fontWeight: 800,
-        color: '#0f172a',
-        marginBottom: '0.75rem',
-      }}
-    >
-      Complete Step-by-Step Tutorial
-    </h2>
+        <section style={{ padding: '2rem 1.5rem 1.5rem', background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: '0 1.5rem' }}>
+            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'rgb(8, 145, 178)', marginBottom: '0.65rem' }}>
+              Complete Step-by-Step Tutorial
+            </h2>
 
-    <p
-      style={{
-        fontSize: '1rem',
-        color: '#475569',
-        maxWidth: '720px',
-        margin: '0 auto',
-        lineHeight: 1.6,
-      }}
-    >
-      Master Tally Connect with our comprehensive guide covering every feature
-      from sign-up to advanced functionality
-    </p>
-  </div>
-</section>
-<section style={{ padding: '3rem 1rem' }}>
-  <div style={{ maxWidth: '90rem', margin: '0 auto' }}>
-    {tutorialSections.map((section) => (
-      <div key={section.sectionId} style={{ marginBottom: '2rem' }}>
-        <h3 style={{ fontSize: '1.9rem', fontWeight: 800, color: '#1e293b' }}>
-          {section.sectionTitle}
-        </h3>
-        <p style={{ color: '#475569', marginBottom: '1.5rem' }}>
-          {section.sectionDescription}
-        </p>
+            <p style={{ fontSize: '1rem', color: '#475569', maxWidth: '720px', margin: '0 auto', lineHeight: 1.6 }}>
+              Master Tally Connect with our comprehensive guide covering every feature from sign-up to advanced functionality
+            </p>
+          </div>
+        </section>
 
-        <div
-  style={{
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', // 🔥 2 per row
-    columnGap: '4rem',
-    rowGap: '5rem',
-    paddingTop: '3rem',
-    paddingInline: '2rem',
-    alignItems: 'center',
-  }}
->
+        {/* Tutorial Cards Section */}
+        <section style={{ padding: '1.5rem 1.5rem 2rem' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+            {tutorialSections.map((section) => (
+              <div key={section.sectionId} style={{ marginBottom: '1rem' }}>
+                <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'rgb(8, 145, 178)' }}>
+                  {section.sectionTitle}
+                </h3>
+                <p style={{ color: '#475569', marginBottom: '1rem' }}>
+                  {section.sectionDescription}
+                </p>
 
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                  columnGap: '2rem',
+                  rowGap: '2rem',
+                  paddingTop: '1.5rem',
+                  paddingInline: '0.5rem',
+                  alignItems: 'start',
+                }}>
+                  {section.steps.map((step, stepIndex) => {
+                    const boxStyle = screenshotBoxStyles[stepIndex % screenshotBoxStyles.length]
+                    const Icon = step.icon;
+                    const isHovered = hoveredCard === step.number;
 
-  {section.steps.map((step, stepIndex) => {
-    const boxStyle = screenshotBoxStyles[stepIndex % screenshotBoxStyles.length]
+                    return (
+                      <div
+                        key={step.number}
+                        onMouseEnter={() => setHoveredCard(step.number)}
+                        onMouseLeave={() => setHoveredCard(null)}
+                        style={{
+                          position: 'relative',
+                          width: '100%',
+                          maxWidth: '600px',
+                          margin: '0 auto',
+                        }}
+                      >
+                        {/* Smooth Slide Animation */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 30 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ 
+                            duration: 0.5, 
+                            delay: (stepIndex * 0.08),
+                            ease: 'easeOut'
+                          }}
+                          viewport={{ once: true, margin: '-50px', amount: 0.2 }}
+                          style={{ height: '100%' }}
+                        >
+                          <div
+                            style={{
+                              position: 'relative',
+                              overflow: 'visible',
+                              transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                              transition: 'transform 0.3s ease',
+                            }}
+                          >
+                            <div style={{ borderRadius: 0, overflow: 'visible', boxShadow: 'none' }}>
+                              <div style={{
+                                background: boxStyle.bg,
+                                border: `2px solid ${boxStyle.border}`,
+                                borderRadius: '1.75rem',
+                                padding: '0.5rem',
+                                boxShadow: `0 8px 20px ${boxStyle.shadow}`,
+                              }}>
+                                <div style={{
+                                  borderRadius: '1.1rem',
+                                  overflow: 'hidden',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                  <img
+                                    src={step.image}
+                                    alt={step.title}
+                                    style={{
+                                      width: '100%',          
+                                      height: 'auto',
+                                      display: 'block',
+                                      objectFit: 'cover',
+                                      background: 'transparent',
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
 
-    const Icon = step.icon;
-    const isHovered = hoveredCard === step.number;
+                            {/* POPUP DESCRIPTION */}
+                            {isHovered && (
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.2, ease: 'easeOut' }}
+                                style={{
+                                  position: 'fixed',
+                                  top: '20%',
+                                  left: '50%',
+                                  transform: 'translateX(-50%)',
+                                  width: '320px',
+                                  background: 'rgba(15, 23, 42, 0.97)',
+                                  backdropFilter: 'blur(12px)',
+                                  borderRadius: '1.25rem',
+                                  padding: '1.5rem',
+                                  boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
+                                  color: 'white',
+                                  zIndex: 999999,
+                                  pointerEvents: 'none',
+                                  whiteSpace: 'normal',
+                                  wordWrap: 'break-word',
+                                }}
+                              >
+                                {/* STEP NUMBER BADGE */}
+                                <div style={{
+                                  position: 'absolute',
+                                  top: '-14px',
+                                  left: '-14px',
+                                  width: '42px',
+                                  height: '42px',
+                                  borderRadius: '50%',
+                                  background: step.iconColor,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontSize: '1.05rem',
+                                  fontWeight: 800,
+                                  color: 'white',
+                                  boxShadow: '0 10px 25px rgba(0,0,0,0.4)',
+                                }}>
+                                  {step.number}
+                                </div>
 
-    const images = step.multiImages ? step.images : [step.image];
-    const isSingleImage = !step.multiImages;
+                                <div style={{
+                                  width: '3rem',
+                                  height: '3rem',
+                                  borderRadius: '0.75rem',
+                                  background: step.iconColor,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  marginBottom: '0.75rem',
+                                }}>
+                                  <Icon color="white" size={22} />
+                                </div>
 
-    return (
-      <div
-        key={step.number}
-        onMouseEnter={() => setHoveredCard(step.number)}
-        onMouseLeave={() => setHoveredCard(null)}
-        style={{
-          position: 'relative',
-          width: 'auto',
-          flex: '1 1 0',
-          minWidth: '420px',
-          perspective: '1200px',
-          margin: '0 auto',
-        }}
-      >
-        {/* Staggered Animation Wrapper */}
-        <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.9 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ 
-            duration: 0.7, 
-            delay: (stepIndex * 0.12),
-            ease: [0.25, 0.46, 0.45, 0.94]
-          }}
-          viewport={{ once: false, margin: '-80px', amount: 0.3 }}
-          style={{ height: '100%' }}
-        >
-          {/* 🔥 ADD THIS WRAPPER HERE */}
-<div
-  style={{
-    position: 'relative',
-    overflow: 'visible',
-  }}
-></div>
+                                <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+                                  {step.title}
+                                </h4>
 
-        <motion.div
-  animate={{
-    scale: isHovered ? 1.03 : 1,
-  }}
-  transition={{ type: 'spring', stiffness: 120, damping: 14 }}
-
-
-          style={{
-            borderRadius: 0,
-            overflow: 'visible',
-            boxShadow: 'none',
-              //? '0 40px 80px rgba(0,0,0,0.55)'
-              //: '0 25px 50px rgba(0,0,0,0.35)',
-            //background: '#000',
-            //border: '8px solid #000',
-          }}
-        >
- <div
-  style={{
-    background: boxStyle.bg,
-    border: `2px solid ${boxStyle.border}`,
-    borderRadius: '1.75rem',
-    padding: '1.25rem',
-    boxShadow: `0 8px 20px ${boxStyle.shadow}`,
-  }}
->
-  {/* ❌ REMOVE white background */}
-  <div
-    style={{
-      borderRadius: '1.1rem',
-      overflow: 'hidden',
-      display: 'flex',
-      justifyContent: 'center',
-    }}
-  >
-    <motion.img
-      src={step.image}
-      alt={step.title}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
-      style={{
-        width: '95%',          
-        height: 'auto',
-        display: 'block',
-        objectFit: 'contain',
-        background: 'transparent',
-      }}
-    />
-  </div>
-</div>
-
-
-{/* Carousel Navigation Dots - Removed, now fully automatic */}
-        </motion.div>
-
-
-        {/* 🟨 POPUP DESCRIPTION */}
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, x: 20, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.25 }}
+                                <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>
+                                  {step.description}
+                                </p>
+                              </motion.div>
+                            )}
+                          </div>
+                        </motion.div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>    
+            ))}
+          </div>
+        </section>
+           
+        {/* CTA SECTION */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '1rem',
+          marginBottom: '2rem',
+        }}>
+          <button
+            onClick={() => window.location.href = 'https://frontend-8x7e.onrender.com/'}
             style={{
-              position: 'fixed',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '320px',
-              background: 'rgba(15, 23, 42, 0.95)',
-              backdropFilter: 'blur(12px)',
-              borderRadius: '1.25rem',
-              padding: '1.5rem',
-              boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
+              padding: '1.25rem 3.5rem',   
+              background: 'rgb(30, 41, 59)',
               color: 'white',
-              zIndex: 99999,
-              pointerEvents: 'none',
-              whiteSpace: 'normal',
-              wordWrap: 'break-word',
+              borderRadius: '1rem',        
+              border: 'none',
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              lineHeight: 1.3,             
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              boxShadow: '0 12px 30px rgba(0,0,0,0.25)',
+              transition: 'all 0.3s',
+              whiteSpace: 'nowrap',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgb(15, 23, 42)';
+              e.currentTarget.style.transform = 'scale(1.04)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgb(30, 41, 59)';
+              e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            {/* 🔢 STEP NUMBER BADGE */}
-    <div
-      style={{
-        position: 'absolute',
-        top: '-14px',
-        left: '-14px',
-        width: '42px',
-        height: '42px',
-        borderRadius: '50%',
-        background: step.iconColor,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '1.05rem',
-        fontWeight: 800,
-        color: 'white',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.4)',
-      }}
-    >
-      {step.number}
-    </div>
-            <div
-              style={{
-                width: '3rem',
-                height: '3rem',
-                borderRadius: '0.75rem',
-                background: step.iconColor,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '0.75rem',
-              }}
-            >
-              <Icon color="white" size={22} />
-            </div>
+            Go to Dashboard
+            <ArrowRight style={{ width: '1.6rem', height: '1.6rem' }} />
+          </button>
+        </div>
 
-            <h4
-              style={{
-                fontSize: '1.1rem',
-                fontWeight: 700,
-                marginBottom: '0.5rem',
-              }}
-            >
-              {step.title}
-            </h4>
-
-            <p
-              style={{
-                fontSize: '0.9rem',
-                color: 'rgba(255,255,255,0.85)',
-                lineHeight: 1.6,
-              }}
-            >
-              {step.description}
-            </p>
-
-            {step.details && (
-              <ul style={{ marginTop: '0.75rem', paddingLeft: '1rem' }}>
-                {step.details.map((d, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      fontSize: '0.8rem',
-                      color: 'rgba(255,255,255,0.75)',
-                      marginBottom: '0.35rem',
-                    }}
-                  >
-                    {d}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </motion.div>
-        )}
-        </motion.div>
+        <Footer/>
       </div>
-    );
-  })}
-</div>
- </div>    
-))}
-  </div>
-</section>
-           
-{/* CTA SECTION */}
-<div
-  style={{
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '1.25rem',
-    marginBottom: '2.5rem',
-  }}
->
-  <button
-    onClick={() =>
-      (window.location.href =
-        'https://frontend-8x7e.onrender.com/')
-    }
-    style={{
-      padding: '1.25rem 3.5rem',   
-      background: 'rgb(30, 41, 59)',
-      color: 'white',
-      borderRadius: '1rem',        
-      border: 'none',
-      fontSize: '1.125rem',
-      fontWeight: 700,
-      lineHeight: 1.3,             
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.75rem',
-      boxShadow: '0 12px 30px rgba(0,0,0,0.25)',
-      transition: 'all 0.3s',
-      whiteSpace: 'nowrap',
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.background = 'rgb(15, 23, 42)';
-      e.currentTarget.style.transform = 'scale(1.04)';
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.background = 'rgb(30, 41, 59)';
-      e.currentTarget.style.transform = 'scale(1)';
-    }}
-  >
-    Go to Dashboard
-    <ArrowRight style={{ width: '1.6rem', height: '1.6rem' }} />
-  </button>
-</div>
-<Footer/>
-</div>
-
-<style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
     </div>
   );
 }
