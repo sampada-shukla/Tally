@@ -33,22 +33,22 @@ const screenshotBoxStyles = [
   {
     bg: '#e0ecff',     
     border: '#3b82f6',
-    shadow: 'rgba(59,130,246,0.25)',
+    shadow: 'rgba(59,130,246,0.1)',
   },
   {
     bg: '#dcf7e6',     
     border: '#22c55e',
-    shadow: 'rgba(34,197,94,0.25)',
+    shadow: 'rgba(34,197,94,0.1)',
   },
   {
     bg: '#ffedd5',     
     border: '#fb923c',
-    shadow: 'rgba(251,146,60,0.25)',
+    shadow: 'rgba(251,146,60,0.1)',
   },
   {
     bg: '#ede9fe',     
     border: '#8b5cf6',
-    shadow: 'rgba(139,92,246,0.25)',
+    shadow: 'rgba(139,92,246,0.1)',
   },
 ];
 
