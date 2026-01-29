@@ -167,9 +167,6 @@ const tutorialSections = [
 /* ======================
    PAGE
 ====================== */
-
-
-====================== */
 export default function TutorialPage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [windowWidth, setWindowWidth] = useState(
