@@ -167,223 +167,390 @@ const tutorialSections = [
 /* ======================
    PAGE
 ====================== */
-export default function TutorialPage() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1024
-  )
 
+
+
+export default function TutorialPage() {
+  let colorIndex = 0
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+
+  // Import Google Fonts (Poppins and Inter)
   useEffect(() => {
     const link = document.createElement('link')
     link.href =
       'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap'
     link.rel = 'stylesheet'
     document.head.appendChild(link)
-    return () => document.head.removeChild(link)
+
+    return () => {
+      document.head.removeChild(link)
+    }
   }, [])
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  const isMobile = windowWidth < 768
-  const isTablet = windowWidth >= 768 && windowWidth < 1024
-
-  let colorIndex = 0
 
   return (
     <div
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #e0f7fa 0%, #ffffff 40%, #ffffff 100%)',
+        position: 'relative',
         fontFamily: '"Inter", sans-serif',
       }}
     >
-      {/* Hero Section */}
-      <section
-        style={{
-          padding: isMobile ? '2rem 1rem' : isTablet ? '2.5rem 1.5rem' : '3rem 1.5rem',
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr 1fr' : '1.1fr 0.9fr',
-          gap: isMobile ? '1rem' : '3rem',
-          alignItems: 'center',
-          background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)',
-        }}
-      >
-        {/* LEFT: Text */}
-        <div style={{ maxWidth: '650px' }}>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            style={{
-              fontFamily: '"Poppins", sans-serif',
-              fontSize: isMobile ? '32px' : '48px',
-              fontWeight: 700,
-              marginBottom: '1rem',
-              lineHeight: '58px',
-            }}
-          >
-            <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore Tally Connect</span>{' '}
-            <span style={{ color: '#0F172A' }}>with Detailed Step-by-Step Tutorials</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            style={{
-              fontSize: '16px',
-              color: '#475569',
-              marginBottom: '1.5rem',
-            }}
-          >
-            Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials
-            covering setup, configuration, and advanced features.
-          </motion.p>
-        </div>
-
-        {/* RIGHT: Video */}
-        <motion.div
+      {/* Background */}
+      <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <div
           style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(135deg, rgba(224,247,250,0.3) 0%, rgba(255,255,255,0) 50%)',
+            opacity: 0.6,
           }}
-          animate={{ y: [0, -12, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
+
+      <div style={{ position: 'relative', zIndex: 10 }}>
+        {/* Hero Section */}
+        <section
+          style={{
+            padding: '3rem 1.5rem',
+            minHeight: '500px',
+            display: 'flex',
+            alignItems: 'center',
+            background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)',
+          }}
         >
-          <TutorialVideo />
-        </motion.div>
-      </section>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 1.5rem' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1.1fr 0.9fr',
+                gap: '3rem',
+                alignItems: 'center',
+              }}
+            >
+              {/* LEFT: Text Content */}
+              <div style={{ maxWidth: '650px' }}>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  style={{
+                    fontFamily: '"Poppins", sans-serif',
+                    fontSize: '48px',
+                    fontWeight: 700,
+                    marginBottom: '1rem',
+                    lineHeight: '58px',
+                    letterSpacing: '-0.025em',
+                  }}
+                >
+                  <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>
+                    Explore Tally Connect
+                  </span>{' '}
+                  <span style={{ color: '#0F172A' }}>
+                    with Detailed Step-by-Step Tutorials
+                  </span>
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  style={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: '16px',
+                    fontWeight: 400,
+                    color: '#475569',
+                    marginBottom: '1.5rem',
+                    lineHeight: '26px',
+                  }}
+                >
+                  Learn how to streamline operations, boost productivity, and scale faster with comprehensive
+                  tutorials covering setup, configuration, and advanced features.
+                </motion.p>
 
-      {/* Tutorial Cards */}
-      <section style={{ padding: '2rem 1rem' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          {tutorialSections.map((section) => (
-            <div key={section.sectionId} style={{ marginBottom: '3rem' }}>
-              <h3 style={{ fontFamily: '"Poppins", sans-serif', fontSize: '28px', fontWeight: 600, marginBottom: '0.75rem' }}>
-                {section.sectionTitle}
-              </h3>
-              <p style={{ fontFamily: '"Inter", sans-serif', fontSize: '14px', color: '#475569', marginBottom: '1.5rem' }}>
-                {section.sectionDescription}
-              </p>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))',
-                  gap: '1.5rem',
-                }}
-              >
-                {section.steps.map((step, stepIndex) => {
-                  const boxStyle = getScreenshotStyle(colorIndex++)
-                  const Icon = step.icon
-                  const isHovered = hoveredCard === step.number
-
-                  return (
-                    <div
-                      key={step.number}
-                      onMouseEnter={() => setHoveredCard(step.number)}
-                      onMouseLeave={() => setHoveredCard(null)}
-                      style={{ position: 'relative' }}
+                {/* Feature List */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}
+                >
+                  {[
+                    'Quick start guides for instant setup',
+                    'Advanced feature walkthroughs',
+                    'How it works steps for smooth onboarding',
+                  ].map((feature, idx) => (
+                    <motion.div
+                      key={feature}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: 0.5 + idx * 0.1 }}
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}
                     >
-                      <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: stepIndex * 0.08 }}
+                      <div
+                        style={{
+                          width: '2.25rem',
+                          height: '2.25rem',
+                          borderRadius: '0.5rem',
+                          background: 'rgba(6, 182, 212, 0.15)',
+                          border: '2px solid rgb(6, 182, 212)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                        }}
                       >
-                        <div
-                          style={{
-                            background: boxStyle.bg,
-                            border: `2px solid ${boxStyle.border}`,
-                            borderRadius: '1.5rem',
-                            padding: '0.5rem',
-                            boxShadow: `0 4px 12px ${boxStyle.shadow}`,
-                          }}
-                        >
-                          <img
-                            src={step.image}
-                            alt={step.title}
-                            style={{
-                              width: '100%',
-                              borderRadius: '1rem',
-                            }}
-                          />
-                        </div>
+                        <CheckCircle style={{ width: '1.25rem', height: '1.25rem', color: 'rgb(6, 182, 212)' }} />
+                      </div>
+                      <span
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: '16px',
+                          fontWeight: 500,
+                          color: '#475569',
+                          lineHeight: '26px',
+                        }}
+                      >
+                        {feature}
+                      </span>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
 
-                        {/* Description - always visible on mobile */}
-                        {(isHovered || isMobile) && (
-                          <div
-                            style={{
-                              marginTop: '1rem',
-                              display: 'flex',
-                              flexDirection: isMobile ? 'row' : 'column',
-                              alignItems: isMobile ? 'flex-start' : 'center',
-                              gap: '0.75rem',
-                              background: isMobile ? 'rgba(15,23,42,0.95)' : 'rgba(15,23,42,0.97)',
-                              padding: '1rem',
-                              borderRadius: '1rem',
-                              color: 'white',
-                            }}
+              {/* RIGHT: Video */}
+              <motion.div
+                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <TutorialVideo />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Tutorial Section Header */}
+        <section
+          style={{
+            padding: '4rem 1.5rem 2.5rem',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)',
+          }}
+        >
+          <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: '0 1.5rem' }}>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              style={{
+                fontFamily: '"Poppins", sans-serif',
+                fontSize: '36px',
+                fontWeight: 700,
+                color: 'rgb(20, 47, 83)',
+                marginBottom: '1rem',
+                lineHeight: '46px',
+              }}
+            >
+              Complete Step-by-Step Guide
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: '16px',
+                color: '#475569',
+                maxWidth: '720px',
+                margin: '0 auto',
+                lineHeight: '26px',
+                fontWeight: 400,
+              }}
+            >
+              Master Tally Connect with our comprehensive guide covering every feature from sign-up to advanced
+              functionality
+            </motion.p>
+          </div>
+        </section>
+
+        {/* Tutorial Cards Section */}
+        <section style={{ padding: '2.5rem 1.5rem 3rem' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+            {/* Single-step sections */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                columnGap: '4rem',
+                rowGap: '3.5rem',
+                marginBottom: '5rem',
+                alignItems: 'start',
+              }}
+            >
+              {tutorialSections
+                .filter((section) => section.steps.length === 1)
+                .map((section) => (
+                  <div key={section.sectionId} style={{ display: 'flex', flexDirection: 'column', gap: 0, height: '100%' }}>
+                    <motion.h3
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px', amount: 0.2 }}
+                      transition={{ duration: 0.5, delay: 0.15 }}
+                      style={{
+                        fontFamily: '"Poppins", sans-serif',
+                        fontSize: '36px',
+                        fontWeight: 600,
+                        color: 'rgb(20, 47, 83)',
+                        marginBottom: '0.5rem',
+                        lineHeight: '46px',
+                        minHeight: '100px',
+                      }}
+                    >
+                      {section.sectionTitle}
+                    </motion.h3>
+
+                    <motion.p
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px', amount: 0.2 }}
+                      transition={{ duration: 0.5, delay: 0.25 }}
+                      style={{
+                        fontFamily: '"Inter", sans-serif',
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        color: '#475569',
+                        marginBottom: '2.5rem',
+                        lineHeight: '26px',
+                        minHeight: '78px',
+                      }}
+                    >
+                      {section.sectionDescription}
+                    </motion.p>
+
+                    {/* Step Card */}
+                    {section.steps.map((step, stepIndex) => {
+                      const boxStyle = getScreenshotStyle(colorIndex++)
+                      const Icon = step.icon
+                      const isHovered = hoveredCard === step.number
+
+                      return (
+                        <div
+                          key={step.number}
+                          onMouseEnter={() => setHoveredCard(step.number)}
+                          onMouseLeave={() => setHoveredCard(null)}
+                          style={{ position: 'relative', width: '100%' }}
+                        >
+                          <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: stepIndex * 0.08, ease: 'easeOut' }}
+                            viewport={{ once: true, margin: '-50px', amount: 0.2 }}
+                            style={{ height: '100%' }}
                           >
                             <div
                               style={{
-                                width: '3rem',
-                                height: '3rem',
-                                borderRadius: '0.75rem',
-                                background: step.iconColor,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
+                                position: 'relative',
+                                overflow: 'visible',
+                                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                                transition: 'transform 0.3s ease',
                               }}
                             >
-                              <Icon color="white" size={22} />
+                              <div style={{ borderRadius: 0, overflow: 'visible', boxShadow: 'none' }}>
+                                <div
+                                  style={{
+                                    background: boxStyle.bg,
+                                    border: `2px solid ${boxStyle.border}`,
+                                    borderRadius: '1.75rem',
+                                    padding: '0.5rem',
+                                    boxShadow: `0 4px 12px ${boxStyle.shadow}`,
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      borderRadius: '1.1rem',
+                                      overflow: 'hidden',
+                                      display: 'flex',
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <img
+                                      src={step.image}
+                                      alt={step.title}
+                                      style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        display: 'block',
+                                        objectFit: 'cover',
+                                        background: 'transparent',
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Hover Tooltip */}
+                              {isHovered && (
+                                <motion.div
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  exit={{ opacity: 0, scale: 0.95 }}
+                                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                                  style={{
+                                    position: 'fixed',
+                                    top: '20%',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    width: '320px',
+                                    background: 'rgba(15, 23, 42, 0.97)',
+                                    backdropFilter: 'blur(12px)',
+                                    borderRadius: '1.25rem',
+                                    padding: '1.5rem',
+                                    boxShadow: '0 15px 30px rgba(0,0,0,0.3)',
+                                    color: 'white',
+                                    zIndex: 999999,
+                                    pointerEvents: 'none',
+                                    whiteSpace: 'normal',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      position: 'absolute',
+                                      top: '-14px',
+                                      left: '-14px',
+                                      width: '42px',
+                                      height: '42px',
+                                      borderRadius: '50%',
+                                      background: step.iconColor,
+                                      display: 'flex',
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <Icon style={{ width: '22px', height: '22px', color: 'white' }} />
+                                  </div>
+                                  <strong style={{ display: 'block', marginBottom: '0.5rem', fontSize: '16px' }}>
+                                    {step.title}
+                                  </strong>
+                                  <span style={{ fontSize: '14px', lineHeight: '1.4rem' }}>{step.description}</span>
+                                </motion.div>
+                              )}
                             </div>
-                            <div>
-                              <h4 style={{ fontFamily: '"Poppins", sans-serif', fontSize: '16px', fontWeight: 600 }}>
-                                {step.title}
-                              </h4>
-                              <p style={{ fontFamily: '"Inter", sans-serif', fontSize: '14px', lineHeight: '20px' }}>
-                                {step.description}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </motion.div>
-                    </div>
-                  )
-                })}
-              </div>
+                          </motion.div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* CTA */}
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '3rem 0' }}>
-        <button
-          onClick={() => (window.location.href = 'https://frontend-8x7e.onrender.com/')}
-          style={{
-            padding: '1rem 2rem',
-            background: 'rgb(30,41,59)',
-            color: 'white',
-            borderRadius: '1rem',
-            fontSize: '16px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-          }}
-        >
-          Go to Dashboard
-          <ArrowRight />
-        </button>
+        <Footer />
       </div>
-
-      <Footer />
     </div>
   )
 }
+ 
