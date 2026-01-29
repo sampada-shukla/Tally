@@ -168,6 +168,7 @@ const tutorialSections = [
    PAGE
 ====================== */
 
+
 export default function TutorialPage() {
   let colorIndex = 0
 
@@ -185,6 +186,21 @@ export default function TutorialPage() {
       document.head.removeChild(link)
     }
   }, [])
+
+  // Responsive breakpoints
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1024
+  )
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const isMobile = windowWidth < 768
+  const isTablet = windowWidth >= 768 && windowWidth < 1024
+  const isDesktop = windowWidth >= 1024
 
   return (
     <div
@@ -211,34 +227,41 @@ export default function TutorialPage() {
         {/* Hero Section */}
         <section
           style={{
-            padding: '3rem 1.5rem',
-            minHeight: '500px',
+            padding: isMobile ? '2rem 1rem' : isTablet ? '2.5rem 1.5rem' : '3rem 1.5rem',
+            minHeight: isMobile ? 'auto' : '500px',
             display: 'flex',
             alignItems: 'center',
             background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)',
           }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 1.5rem' }}>
+          <div
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              width: '100%',
+              padding: isMobile ? '0 1rem' : '0 1.5rem',
+            }}
+          >
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1.1fr 0.9fr',
-                gap: '3rem',
+                gridTemplateColumns: isMobile || isTablet ? '1fr' : '1.1fr 0.9fr',
+                gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
                 alignItems: 'center',
               }}
             >
               {/* LEFT: Text Content */}
-              <div style={{ maxWidth: '650px' }}>
+              <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                   style={{
                     fontFamily: '"Poppins", sans-serif',
-                    fontSize: '48px',
+                    fontSize: isMobile ? '32px' : isTablet ? '40px' : '48px',
                     fontWeight: 700,
                     marginBottom: '1rem',
-                    lineHeight: '58px',
+                    lineHeight: isMobile ? '40px' : isTablet ? '50px' : '58px',
                     letterSpacing: '-0.025em',
                   }}
                 >
@@ -251,11 +274,11 @@ export default function TutorialPage() {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   style={{
                     fontFamily: '"Inter", sans-serif',
-                    fontSize: '16px',
+                    fontSize: isMobile ? '14px' : '16px',
                     fontWeight: 400,
                     color: '#475569',
                     marginBottom: '1.5rem',
-                    lineHeight: '26px',
+                    lineHeight: isMobile ? '22px' : '26px',
                   }}
                 >
                   Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials
@@ -282,8 +305,8 @@ export default function TutorialPage() {
                     >
                       <div
                         style={{
-                          width: '2.25rem',
-                          height: '2.25rem',
+                          width: isMobile ? '1.75rem' : '2.25rem',
+                          height: isMobile ? '1.75rem' : '2.25rem',
                           borderRadius: '0.5rem',
                           background: 'rgba(6, 182, 212, 0.15)',
                           border: '2px solid rgb(6, 182, 212)',
@@ -293,15 +316,21 @@ export default function TutorialPage() {
                           flexShrink: 0,
                         }}
                       >
-                        <CheckCircle style={{ width: '1.25rem', height: '1.25rem', color: 'rgb(6, 182, 212)' }} />
+                        <CheckCircle
+                          style={{
+                            width: isMobile ? '1rem' : '1.25rem',
+                            height: isMobile ? '1rem' : '1.25rem',
+                            color: 'rgb(6, 182, 212)',
+                          }}
+                        />
                       </div>
                       <span
                         style={{
                           fontFamily: "'Inter', sans-serif",
-                          fontSize: '16px',
+                          fontSize: isMobile ? '14px' : '16px',
                           fontWeight: 500,
                           color: '#475569',
-                          lineHeight: '26px',
+                          lineHeight: isMobile ? '22px' : '26px',
                         }}
                       >
                         {feature}
@@ -313,8 +342,13 @@ export default function TutorialPage() {
 
               {/* RIGHT: Enhanced Video Card */}
               <motion.div
-                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                animate={{ y: [0, -12, 0] }}
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  order: isMobile || isTablet ? -1 : 0,
+                }}
+                animate={isMobile ? {} : { y: [0, -12, 0] }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
@@ -329,17 +363,27 @@ export default function TutorialPage() {
 
         {/* Tutorial Section Header */}
         <section
-          style={{ padding: '2rem 1.5rem 1.5rem', background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)' }}
+          style={{
+            padding: isMobile ? '2.5rem 1rem 1.5rem' : isTablet ? '3rem 1.5rem 2rem' : '4rem 1.5rem 2.5rem',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)',
+          }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: '0 1.5rem' }}>
+          <div
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              textAlign: 'center',
+              padding: isMobile ? '0 1rem' : '0 1.5rem',
+            }}
+          >
             <h2
               style={{
                 fontFamily: '"Poppins", sans-serif',
-                fontSize: '36px',
+                fontSize: isMobile ? '28px' : isTablet ? '32px' : '36px',
                 fontWeight: 700,
                 color: 'rgb(20, 47, 83)',
-                marginBottom: '0.65rem',
-                lineHeight: '46px',
+                marginBottom: '1rem',
+                lineHeight: isMobile ? '36px' : isTablet ? '40px' : '46px',
               }}
             >
               Complete Step-by-Step Guide
@@ -348,11 +392,11 @@ export default function TutorialPage() {
             <p
               style={{
                 fontFamily: '"Inter", sans-serif',
-                fontSize: '16px',
+                fontSize: isMobile ? '14px' : '16px',
                 color: '#475569',
                 maxWidth: '720px',
                 margin: '0 auto',
-                lineHeight: '26px',
+                lineHeight: isMobile ? '22px' : '26px',
                 fontWeight: 400,
               }}
             >
@@ -363,16 +407,26 @@ export default function TutorialPage() {
         </section>
 
         {/* Tutorial Cards Section */}
-        <section style={{ padding: '1.5rem 1.5rem 2rem' }}>
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <section
+          style={{
+            padding: isMobile ? '1.5rem 1rem 2rem' : isTablet ? '2rem 1.5rem 2.5rem' : '2.5rem 1.5rem 3rem',
+          }}
+        >
+          <div
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              padding: isMobile ? '0 1rem' : '0 1.5rem',
+            }}
+          >
             {/* Single-step sections */}
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                columnGap: '3rem',
-                rowGap: '2rem',
-                marginBottom: '3rem',
+                gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+                columnGap: isMobile ? '0' : isTablet ? '2rem' : '4rem',
+                rowGap: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.5rem',
+                marginBottom: isMobile ? '3rem' : isTablet ? '4rem' : '5rem',
                 alignItems: 'start',
               }}
             >
@@ -391,12 +445,12 @@ export default function TutorialPage() {
                     <h3
                       style={{
                         fontFamily: '"Poppins", sans-serif',
-                        fontSize: '36px',
+                        fontSize: isMobile ? '24px' : isTablet ? '30px' : '36px',
                         fontWeight: 600,
                         color: 'rgb(20, 47, 83)',
-                        marginBottom: '0.2rem',
-                        lineHeight: '46px',
-                        minHeight: '100px',
+                        marginBottom: '0.5rem',
+                        lineHeight: isMobile ? '32px' : isTablet ? '38px' : '46px',
+                        minHeight: isMobile ? 'auto' : isTablet ? '80px' : '100px',
                       }}
                     >
                       {section.sectionTitle}
@@ -405,12 +459,12 @@ export default function TutorialPage() {
                     <p
                       style={{
                         fontFamily: '"Inter", sans-serif',
-                        fontSize: '16px',
+                        fontSize: isMobile ? '14px' : '16px',
                         fontWeight: 400,
                         color: '#475569',
-                        marginBottom: '2rem',
-                        lineHeight: '26px',
-                        minHeight: '78px',
+                        marginBottom: isMobile ? '1.5rem' : isTablet ? '2rem' : '2.5rem',
+                        lineHeight: isMobile ? '22px' : '26px',
+                        minHeight: isMobile ? 'auto' : isTablet ? '60px' : '78px',
                       }}
                     >
                       {section.sectionDescription}
@@ -424,7 +478,7 @@ export default function TutorialPage() {
                       return (
                         <div
                           key={step.number}
-                          onMouseEnter={() => setHoveredCard(step.number)}
+                          onMouseEnter={() => !isMobile && setHoveredCard(step.number)}
                           onMouseLeave={() => setHoveredCard(null)}
                           style={{
                             position: 'relative',
@@ -446,7 +500,7 @@ export default function TutorialPage() {
                               style={{
                                 position: 'relative',
                                 overflow: 'visible',
-                                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                                transform: isHovered && !isMobile ? 'scale(1.02)' : 'scale(1)',
                                 transition: 'transform 0.3s ease',
                               }}
                             >
@@ -455,14 +509,14 @@ export default function TutorialPage() {
                                   style={{
                                     background: boxStyle.bg,
                                     border: `2px solid ${boxStyle.border}`,
-                                    borderRadius: '1.75rem',
+                                    borderRadius: isMobile ? '1.25rem' : '1.75rem',
                                     padding: '0.5rem',
                                     boxShadow: `0 4px 12px ${boxStyle.shadow}`,
                                   }}
                                 >
                                   <div
                                     style={{
-                                      borderRadius: '1.1rem',
+                                      borderRadius: isMobile ? '0.75rem' : '1.1rem',
                                       overflow: 'hidden',
                                       display: 'flex',
                                       justifyContent: 'center',
@@ -484,7 +538,7 @@ export default function TutorialPage() {
                                 </div>
                               </div>
 
-                              {isHovered && (
+                              {isHovered && !isMobile && (
                                 <motion.div
                                   initial={{ opacity: 0, scale: 0.95 }}
                                   animate={{ opacity: 1, scale: 1 }}
@@ -495,7 +549,7 @@ export default function TutorialPage() {
                                     top: '20%',
                                     left: '50%',
                                     transform: 'translateX(-50%)',
-                                    width: '320px',
+                                    width: isTablet ? '280px' : '320px',
                                     background: 'rgba(15, 23, 42, 0.97)',
                                     backdropFilter: 'blur(12px)',
                                     borderRadius: '1.25rem',
@@ -582,14 +636,18 @@ export default function TutorialPage() {
             {tutorialSections
               .filter((section) => section.steps.length > 1)
               .map((section) => (
-                <div key={section.sectionId} style={{ marginBottom: '1rem' }}>
+                <div
+                  key={section.sectionId}
+                  style={{ marginBottom: isMobile ? '3rem' : isTablet ? '3.5rem' : '4rem' }}
+                >
                   <h3
                     style={{
                       fontFamily: '"Poppins", sans-serif',
-                      fontSize: '36px',
+                      fontSize: isMobile ? '24px' : isTablet ? '30px' : '36px',
                       fontWeight: 600,
                       color: 'rgb(20, 47, 83)',
-                      lineHeight: '46px',
+                      lineHeight: isMobile ? '32px' : isTablet ? '38px' : '46px',
+                      marginBottom: '0.75rem',
                     }}
                   >
                     {section.sectionTitle}
@@ -597,11 +655,11 @@ export default function TutorialPage() {
                   <p
                     style={{
                       fontFamily: '"Inter", sans-serif',
-                      fontSize: '16px',
+                      fontSize: isMobile ? '14px' : '16px',
                       fontWeight: 400,
                       color: '#475569',
-                      marginBottom: '1rem',
-                      lineHeight: '26px',
+                      marginBottom: isMobile ? '1.5rem' : isTablet ? '1.75rem' : '2rem',
+                      lineHeight: isMobile ? '22px' : '26px',
                     }}
                   >
                     {section.sectionDescription}
@@ -610,11 +668,11 @@ export default function TutorialPage() {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                      columnGap: '2rem',
-                      rowGap: '2rem',
-                      paddingTop: '1.5rem',
-                      paddingInline: '0.5rem',
+                      gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+                      columnGap: isMobile ? '0' : isTablet ? '2rem' : '3rem',
+                      rowGap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+                      paddingTop: isMobile ? '1rem' : isTablet ? '1.5rem' : '2rem',
+                      paddingInline: isMobile ? '0' : '0.5rem',
                       alignItems: 'stretch',
                     }}
                   >
@@ -627,12 +685,12 @@ export default function TutorialPage() {
                       return (
                         <div
                           key={step.number}
-                          onMouseEnter={() => setHoveredCard(step.number)}
+                          onMouseEnter={() => !isMobile && setHoveredCard(step.number)}
                           onMouseLeave={() => setHoveredCard(null)}
                           style={{
                             position: 'relative',
                             width: '100%',
-                            maxWidth: '600px',
+                            maxWidth: isMobile ? '100%' : '600px',
                             margin: '0 auto',
                           }}
                         >
@@ -651,7 +709,7 @@ export default function TutorialPage() {
                               style={{
                                 position: 'relative',
                                 overflow: 'visible',
-                                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                                transform: isHovered && !isMobile ? 'scale(1.02)' : 'scale(1)',
                                 transition: 'transform 0.3s ease',
                               }}
                             >
@@ -660,14 +718,14 @@ export default function TutorialPage() {
                                   style={{
                                     background: boxStyle.bg,
                                     border: `2px solid ${boxStyle.border}`,
-                                    borderRadius: '1.75rem',
+                                    borderRadius: isMobile ? '1.25rem' : '1.75rem',
                                     padding: '0.5rem',
                                     boxShadow: `0 4px 12px ${boxStyle.shadow}`,
                                   }}
                                 >
                                   <div
                                     style={{
-                                      borderRadius: '1.1rem',
+                                      borderRadius: isMobile ? '0.75rem' : '1.1rem',
                                       overflow: 'hidden',
                                       display: 'flex',
                                       justifyContent: 'center',
@@ -689,7 +747,7 @@ export default function TutorialPage() {
                                 </div>
                               </div>
 
-                              {isHovered && (
+                              {isHovered && !isMobile && (
                                 <motion.div
                                   initial={{ opacity: 0, scale: 0.95 }}
                                   animate={{ opacity: 1, scale: 1 }}
@@ -700,7 +758,7 @@ export default function TutorialPage() {
                                     top: '20%',
                                     left: '50%',
                                     transform: 'translateX(-50%)',
-                                    width: '320px',
+                                    width: isTablet ? '280px' : '320px',
                                     background: 'rgba(15, 23, 42, 0.97)',
                                     backdropFilter: 'blur(12px)',
                                     borderRadius: '1.25rem',
@@ -790,20 +848,21 @@ export default function TutorialPage() {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '1rem',
-            marginBottom: '2rem',
+            marginTop: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+            marginBottom: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+            padding: isMobile ? '0 1rem' : '0',
           }}
         >
           <button
             onClick={() => (window.location.href = 'https://frontend-8x7e.onrender.com/')}
             style={{
               fontFamily: '"Poppins", sans-serif',
-              padding: '1.25rem 3.5rem',
+              padding: isMobile ? '1rem 2rem' : isTablet ? '1.1rem 2.5rem' : '1.25rem 3.5rem',
               background: 'rgb(30, 41, 59)',
               color: 'white',
               borderRadius: '1rem',
               border: 'none',
-              fontSize: '16px',
+              fontSize: isMobile ? '14px' : '16px',
               fontWeight: 500,
               lineHeight: '24px',
               cursor: 'pointer',
@@ -813,6 +872,9 @@ export default function TutorialPage() {
               boxShadow: '0 6px 15px rgba(0,0,0,0.15)',
               transition: 'all 0.3s',
               whiteSpace: 'nowrap',
+              width: isMobile ? '100%' : 'auto',
+              justifyContent: 'center',
+              maxWidth: isMobile ? '100%' : 'none',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'rgb(15, 23, 42)'
@@ -824,7 +886,7 @@ export default function TutorialPage() {
             }}
           >
             Go to Dashboard
-            <ArrowRight style={{ width: '1.6rem', height: '1.6rem' }} />
+            <ArrowRight style={{ width: isMobile ? '1.25rem' : '1.6rem', height: isMobile ? '1.25rem' : '1.6rem' }} />
           </button>
         </div>
 
