@@ -405,13 +405,13 @@ export default function TutorialPage() {
 
   // Flat list of all steps in render order — used to map each card to a unique palette index
   // Flat list of all steps in render order
+// ===== Responsive layout helpers =====
 const allStepsOrdered = tutorialSections.flatMap((s) => s.steps)
 
-// Map step number → color index
 const getColorIndex = (stepNumber: number) =>
   allStepsOrdered.findIndex((s) => s.number === stepNumber)
 
-// Hero section grid style
+// ===== Hero grid style =====
 const heroGridStyle: React.CSSProperties = {
   display: 'grid',
   gridTemplateColumns: isMobile
@@ -423,24 +423,31 @@ const heroGridStyle: React.CSSProperties = {
   alignItems: 'center',
 }
 
+// ===== Headings =====
+const h1Style: React.CSSProperties = {
+  fontFamily: '"Poppins", sans-serif',
+  fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+  fontWeight: 700,
+  marginBottom: '1rem',
+  lineHeight: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.625rem',
+  letterSpacing: '-0.025em',
+}
 
-  const h2Style: React.CSSProperties = {
-    fontFamily: '"Poppins", sans-serif',
-    fontSize: isMobile ? '1.75rem' : isTablet ? '2rem' : '2.25rem',
-    fontWeight: 700,
-    color: 'rgb(20, 47, 83)',
-    marginBottom: '0.65rem',
-    lineHeight: isMobile ? '2.25rem' : isTablet ? '2.5rem' : '2.875rem',
-  }
+const h2Style: React.CSSProperties = {
+  fontFamily: '"Poppins", sans-serif',
+  fontSize: isMobile ? '1.75rem' : isTablet ? '2rem' : '2.25rem',
+  fontWeight: 700,
+  color: 'rgb(20, 47, 83)',
+  marginBottom: '0.65rem',
+}
 
-  const h3Style: React.CSSProperties = {
-    fontFamily: '"Poppins", sans-serif',
-    fontSize: isMobile ? '1.5rem' : isTablet ? '1.75rem' : '1.75rem',
-    fontWeight: 700,
-    color: 'rgb(20, 47, 83)',
-    marginBottom: '0.5rem',
-    lineHeight: '1.3',
-  }
+const h3Style: React.CSSProperties = {
+  fontFamily: '"Poppins", sans-serif',
+  fontSize: isMobile ? '1.5rem' : isTablet ? '1.75rem' : '1.75rem',
+  fontWeight: 700,
+  color: 'rgb(20, 47, 83)',
+  marginBottom: '0.5rem',
+}
 
   const cardsGridStyle = {
     display: 'grid',
