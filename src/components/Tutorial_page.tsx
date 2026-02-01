@@ -488,25 +488,25 @@ export default function TutorialPage() {
             <div style={heroGridStyle}>
               {/* LEFT: Text Content */}
               <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
-                {/* Animated H1 line 1 */}
+                {/* Animated H1 */}
                 <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0, ease: 'easeOut' }}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0, ease: [0.25, 0.46, 0.45, 0.94] }}
                   style={h1Style}
                 >
                   <motion.span
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                    initial={{ opacity: 0, x: -40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
                     style={{ color: 'rgb(6, 182, 212)', fontWeight: 900, display: 'block' }}
                   >
                     Explore Tally Connect
                   </motion.span>
                   <motion.span
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                    initial={{ opacity: 0, x: -40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                     style={{ color: '#0F172A', display: 'block' }}
                   >
                     with Detailed Step-by-Step Tutorials
@@ -515,9 +515,9 @@ export default function TutorialPage() {
 
                 {/* Animated description */}
                 <motion.p
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                   style={{
                     fontFamily: '"Inter", sans-serif',
                     fontSize: isMobile ? '0.9375rem' : '1rem',
@@ -540,9 +540,9 @@ export default function TutorialPage() {
                   ].map((feature, index) => (
                     <motion.div
                       key={feature}
-                      initial={{ opacity: 0, y: 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.4 + index * 0.1, ease: 'easeOut' }}
+                      initial={{ opacity: 0, x: -40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.7, delay: 0.4 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
                       style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
                     >
                       <div
