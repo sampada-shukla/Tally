@@ -454,18 +454,7 @@ export default function TutorialPage() {
             <div style={heroGridStyle}>
               {/* LEFT: Text Content */}
               <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
-                <h1 style={h1Style}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                    <img 
-                      src={logoImage} 
-                      alt="WorkEye Logo" 
-                      style={{ 
-                        width: isMobile ? '5rem' : '7.5rem', 
-                        height: isMobile ? '5rem' : '7.5rem', 
-                        objectFit: 'contain' 
-                      }} 
-                    />
-                  </div>
+               
 
                   <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore Tally Connect</span>{' '}
                   <span style={{ color: '#0F172A' }}>with Detailed Step-by-Step Tutorials</span>
