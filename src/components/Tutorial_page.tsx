@@ -164,7 +164,7 @@ const tutorialSections = [
 }
 ]
 
-nterface ScreenshotCardProps {
+interface ScreenshotCardProps {
   step: TutorialStep;
   stepIndex: number;
   colorIndex: number;
