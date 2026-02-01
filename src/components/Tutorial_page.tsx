@@ -30,15 +30,24 @@ type ScreenshotStyle = {
   shadow: string
 }
 
-const getScreenshotStyle = (index: number) => {
-  const GOLDEN_RATIO = 137.508
-  const hue = (index * GOLDEN_RATIO) % 360
+// Fixed palette — each colour is visually distinct from every other.
+// Add more entries here if you add more cards in the future.
+const CARD_PALETTE: ScreenshotStyle[] = [
+  { bg: '#e0f2fe', border: '#38bdf8', shadow: 'rgba(56,189,248,0.25)' },   // sky blue
+  { bg: '#fce7f3', border: '#f472b6', shadow: 'rgba(244,114,182,0.25)' },  // pink
+  { bg: '#dcfce7', border: '#4ade80', shadow: 'rgba(74,222,128,0.25)' },   // green
+  { bg: '#ede9fe', border: '#a78bfa', shadow: 'rgba(167,139,250,0.25)' },  // violet
+  { bg: '#fff7ed', border: '#fb923c', shadow: 'rgba(251,146,60,0.25)' },   // orange
+  { bg: '#fef9c3', border: '#facc15', shadow: 'rgba(250,204,21,0.25)' },   // yellow
+  { bg: '#ccfbf1', border: '#2dd4bf', shadow: 'rgba(45,212,191,0.25)' },   // teal
+  { bg: '#fee2e2', border: '#f87171', shadow: 'rgba(248,113,113,0.25)' },  // red
+  { bg: '#dbeafe', border: '#60a5fa', shadow: 'rgba(96,165,250,0.25)' },   // blue
+]
 
-  return {
-    bg: `hsl(${hue}, 85%, 96%)`,
-    border: `hsl(${hue}, 70%, 55%)`,
-    shadow: `hsla(${hue}, 70%, 55%, 0.25)`,
-  }
+// Maps a sequential call index (0, 1, 2 …) to a palette entry.
+// Wraps around only if you ever have more cards than palette entries.
+const getScreenshotStyle = (index: number) => {
+  return CARD_PALETTE[index % CARD_PALETTE.length]
 }
 
 const CONTAINER_CONFIG = {
@@ -396,7 +405,10 @@ export default function TutorialPage() {
     }
   }, [])
 
-  const heroGridStyle = {
+  // Flat list of all steps in render order — used to map each card to a unique palette index
+  const allStepsOrdered = tutorialSections.flatMap((s) => s.steps)
+  const getColorIndex = (stepNumber: number) =>
+    allStepsOrdered.findIndex((s) => s.number === stepNumber)
     display: 'grid',
     gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1.1fr 0.9fr',
     gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
@@ -668,7 +680,7 @@ export default function TutorialPage() {
                       <ScreenshotCard
                         step={step1}
                         stepIndex={0}
-                        colorIndex={step1.number}
+                        colorIndex={getColorIndex(step1.number)}
                         isHovered={hoveredCard === step1.number}
                         onHover={setHoveredCard}
                         isMobile={isMobile}
@@ -703,7 +715,7 @@ export default function TutorialPage() {
                       <ScreenshotCard
                         step={step2}
                         stepIndex={0}
-                        colorIndex={step2.number}
+                        colorIndex={getColorIndex(step2.number)}
                         isHovered={hoveredCard === step2.number}
                         onHover={setHoveredCard}
                         isMobile={isMobile}
@@ -766,7 +778,7 @@ export default function TutorialPage() {
                           <ScreenshotCard
                             step={step}
                             stepIndex={stepIndex}
-                            colorIndex={step.number}
+                            colorIndex={getColorIndex(step.number)}
                             isHovered={hoveredCard === step.number}
                             onHover={setHoveredCard}
                             isMobile={isMobile}
