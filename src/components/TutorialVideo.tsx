@@ -24,7 +24,21 @@ export const TutorialVideo = () => {
       }}
       className="video-card-enhanced"
     >
-      
+      {/* Shimmer effect */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: '-100%',
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.1), transparent)',
+          zIndex: 10,
+          pointerEvents: 'none',
+        }}
+        className="shimmer-effect"
+      />
+
       {/* VIDEO PREVIEW */}
       <div
         style={{
@@ -268,7 +282,87 @@ export const TutorialVideo = () => {
         </motion.button>
       </div>
 
-      
+      <style jsx>{`
+        .shimmer-effect {
+          animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+
+        .video-card-enhanced:hover .shimmer-effect {
+          animation: shimmer 0.8s ease;
+        }
+
+        .floating-particles {
+          animation: float-rotate 20s linear infinite;
+        }
+
+        @keyframes float-rotate {
+          from {
+            transform: rotate(0deg) scale(1);
+          }
+          50% {
+            transform: rotate(180deg) scale(1.1);
+          }
+          to {
+            transform: rotate(360deg) scale(1);
+          }
+        }
+
+        .pulse-ring-1 {
+          animation: pulse-ring 2s ease-in-out infinite;
+        }
+
+        .pulse-ring-2 {
+          animation: pulse-ring 2s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes pulse-ring {
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 0.4;
+          }
+          50% {
+            transform: scale(1.3);
+            opacity: 0;
+          }
+        }
+
+        .play-button-enhanced:hover {
+          background: rgb(8, 145, 178);
+        }
+
+        .watch-button-enhanced:hover .button-shimmer {
+          animation: button-shimmer 0.6s ease;
+        }
+
+        @keyframes button-shimmer {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+
+        .watch-button-enhanced:hover .button-icon {
+          animation: icon-slide 0.3s ease forwards;
+        }
+
+        @keyframes icon-slide {
+          to {
+            transform: translateX(4px);
+          }
+        }
+      `}</style>
     </motion.div>
   )
 }
