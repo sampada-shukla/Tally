@@ -30,8 +30,6 @@ type ScreenshotStyle = {
   shadow: string
 }
 
-// Fixed palette — each colour is visually distinct from every other.
-// Add more entries here if you add more cards in the future.
 const CARD_PALETTE: ScreenshotStyle[] = [
   { bg: '#e0f2fe', border: '#38bdf8', shadow: 'rgba(56,189,248,0.25)' },   // sky blue
   { bg: '#fce7f3', border: '#f472b6', shadow: 'rgba(244,114,182,0.25)' },  // pink
@@ -41,7 +39,7 @@ const CARD_PALETTE: ScreenshotStyle[] = [
   { bg: '#fef9c3', border: '#facc15', shadow: 'rgba(250,204,21,0.25)' },   // yellow
   { bg: '#ccfbf1', border: '#2dd4bf', shadow: 'rgba(45,212,191,0.25)' },   // teal
   { bg: '#fee2e2', border: '#f87171', shadow: 'rgba(248,113,113,0.25)' },  // red
-  { bg: '#dbeafe', border: '#60a5fa', shadow: 'rgba(96,165,250,0.25)' },   // blue
+  { bg: '#dbeafe', border: '#60a5fa', shadow: 'rgba(96,165,250,0.25)' },   
 ]
 
 // Maps a sequential call index (0, 1, 2 …) to a palette entry.
