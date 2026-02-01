@@ -39,7 +39,8 @@ const CARD_PALETTE: ScreenshotStyle[] = [
   { bg: '#fef9c3', border: '#facc15', shadow: 'rgba(250,204,21,0.25)' },   // yellow
   { bg: '#ccfbf1', border: '#2dd4bf', shadow: 'rgba(45,212,191,0.25)' },   // teal
   { bg: '#fee2e2', border: '#f87171', shadow: 'rgba(248,113,113,0.25)' },  // red
-  { bg: '#dbeafe', border: '#60a5fa', shadow: 'rgba(96,165,250,0.25)' },   
+  { bg: '#ecf3e4', border: '#7a8f3a', shadow: 'rgba(122,143,58,0.25)' }, // olive green
+  
 ]
 
 // Maps a sequential call index (0, 1, 2 …) to a palette entry.
