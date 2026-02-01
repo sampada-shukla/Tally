@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   ArrowRight,
   CheckCircle,
@@ -12,11 +12,9 @@ import {
   ExternalLink,
   UserCheck,
 } from 'lucide-react'
-import { useEffect } from 'react'
 
-import  TutorialVideo  from './TutorialVideo'
+import TutorialVideo from './TutorialVideo'
 import { Footer } from './Footer'
-
 
 import login_page from './assets/login_page.png'
 import dashboard_page from './assets/dashboard_page.png'
@@ -43,50 +41,80 @@ const getScreenshotStyle = (index: number) => {
   }
 }
 
+const CONTAINER_CONFIG = {
+  borderRadius: '1.5rem',
+  padding: '0.5rem',
+  aspectRatio: '16/9',
+  innerBorderRadius: '1rem',
+}
+
+const SCREENSHOT_CONFIG = {
+  default: {
+    objectFit: 'cover' as const,
+    width: '100%',
+    height: '100%',
+  },
+}
+
 /* ======================
    TUTORIAL DATA
 ====================== */
 
-const tutorialSections = [
-  {
-  sectionId: 1,
-  sectionTitle: '1: Admin Registration & License Setup',
-  sectionDescription:
-    'Initial system onboarding where the Admin registers, activates the license, and securely sets up credentials.',
-  steps: [
-    {
-      number: 1,
-      title: 'Admin Registration, License Activation & Credential Setup',
-      description:'The Admin completes registration, license activation, and secure credential setup to access the dashboard.',
-      icon: Shield,
-      iconColor: '#1976D2',
-      image: login_page,
-    },
-  ],
-},
-  {
-  sectionId: 2,
-  sectionTitle: '2: Agent Setup & Authentication',
-  sectionDescription:
-    'Agent installation and authentication for real-time synchronization.',
-  steps: [
-    {
-      number: 2,
-      title: 'Agent Download, Installation & Authentication',
-      description:
-        'The Admin downloads, installs, and authenticates the desktop agent to enable secure real-time data synchronization.',
-      icon: Users,
-      iconColor: '#673AB7',
-      image: dashboard_page,
-    },
-  ],
-},
+type TutorialStep = {
+  number: number
+  title: string
+  description: string
+  icon: React.ForwardRefExoticComponent<any>
+  iconColor: string
+  image: string
+}
 
+type TutorialSection = {
+  sectionId: number
+  sectionTitle: string
+  sectionDescription: string
+  steps: TutorialStep[]
+}
+
+const tutorialSections: TutorialSection[] = [
+  {
+    sectionId: 1,
+    sectionTitle: '1: Admin Registration & License Setup',
+    sectionDescription:
+      'Initial system onboarding where the Admin registers, activates the license, and securely sets up credentials.',
+    steps: [
+      {
+        number: 1,
+        title: 'Admin Registration, License Activation & Credential Setup',
+        description:
+          'The Admin completes registration, license activation, and secure credential setup to access the dashboard.',
+        icon: Shield,
+        iconColor: '#1976D2',
+        image: login_page,
+      },
+    ],
+  },
+  {
+    sectionId: 2,
+    sectionTitle: '2: Agent Setup & Authentication',
+    sectionDescription:
+      'Agent installation and authentication for real-time synchronization.',
+    steps: [
+      {
+        number: 2,
+        title: 'Agent Download, Installation & Authentication',
+        description:
+          'The Admin downloads, installs, and authenticates the desktop agent to enable secure real-time data synchronization.',
+        icon: Users,
+        iconColor: '#673AB7',
+        image: dashboard_page,
+      },
+    ],
+  },
   {
     sectionId: 3,
     sectionTitle: '3: Data Sync & Login Routing',
-    sectionDescription:
-      'Data synchronization and login routing.',
+    sectionDescription: 'Data synchronization and login routing.',
     steps: [
       {
         number: 9,
@@ -108,69 +136,72 @@ const tutorialSections = [
       },
     ],
   },
-  
-{
-  sectionId: 4,
-  sectionTitle: '4: Role-Based Access Control',
-  sectionDescription:
-    'Admins define and manage user roles, permissions, and dashboard access to ensure secure and controlled system usage.',
-  steps: [
-    {
-      number: 11,
-      title: 'User Management Dashboard',
-      description:
-        'Admins view all registered users, including their email IDs and access status. This dashboard serves as the central hub for managing users.',
-      icon: Users,
-      iconColor: '#6A1B9A',
-      image: user_management_page, 
-    },
-    {
-      number: 12,
-      title: 'Create New User',
-      description:
-        'Admins add users by entering employee details such as name, email address, company name, and a temporary password through a secure modal.',
-      icon: UserPlus,
-      iconColor: '#1976D2',
-      image: add_user, 
-    },
-    {
-      number: 13,
-      title: 'Assign User Access',
-      description:
-        'Once added, the user appears in the list, allowing Admins to proceed with permission configuration and role assignment.',
-      icon: UserCheck,
-      iconColor: '#2E7D32',
-      image: user_created,
-    },
-    {
-      number: 14,
-      title: 'Dashboard Permissions Configuration',
-      description:
-        'Admins enable or disable dashboard widgets such as Receivables, Payables, Pending Bills, and Income vs Expense charts using simple toggle controls.',
-      icon: Settings,
-      iconColor: '#EF6C00',
-      image: save_changes, 
-    },
-    {
-      number: 15,
-      title: 'Save Permission Changes',
-      description:
-        'After reviewing permissions, Admins save changes to instantly enforce role-based access. Users will only see authorized data and widgets.',
-      icon: CheckCircle,
-      iconColor: '#4CAF50',
-      image: permission_page, 
-    },
-  ],
-}
+  {
+    sectionId: 4,
+    sectionTitle: '4: Role-Based Access Control',
+    sectionDescription:
+      'Admins define and manage user roles, permissions, and dashboard access to ensure secure and controlled system usage.',
+    steps: [
+      {
+        number: 11,
+        title: 'User Management Dashboard',
+        description:
+          'Admins view all registered users, including their email IDs and access status. This dashboard serves as the central hub for managing users.',
+        icon: Users,
+        iconColor: '#6A1B9A',
+        image: user_management_page,
+      },
+      {
+        number: 12,
+        title: 'Create New User',
+        description:
+          'Admins add users by entering employee details such as name, email address, company name, and a temporary password through a secure modal.',
+        icon: UserPlus,
+        iconColor: '#1976D2',
+        image: add_user,
+      },
+      {
+        number: 13,
+        title: 'Assign User Access',
+        description:
+          'Once added, the user appears in the list, allowing Admins to proceed with permission configuration and role assignment.',
+        icon: UserCheck,
+        iconColor: '#2E7D32',
+        image: user_created,
+      },
+      {
+        number: 14,
+        title: 'Dashboard Permissions Configuration',
+        description:
+          'Admins enable or disable dashboard widgets such as Receivables, Payables, Pending Bills, and Income vs Expense charts using simple toggle controls.',
+        icon: Settings,
+        iconColor: '#EF6C00',
+        image: save_changes,
+      },
+      {
+        number: 15,
+        title: 'Save Permission Changes',
+        description:
+          'After reviewing permissions, Admins save changes to instantly enforce role-based access. Users will only see authorized data and widgets.',
+        icon: CheckCircle,
+        iconColor: '#4CAF50',
+        image: permission_page,
+      },
+    ],
+  },
 ]
 
+/* ======================
+   SCREENSHOT CARD
+====================== */
+
 interface ScreenshotCardProps {
-  step: TutorialStep;
-  stepIndex: number;
-  colorIndex: number;
-  isHovered: boolean;
-  onHover: (number: number | null) => void;
-  isMobile: boolean;
+  step: TutorialStep
+  stepIndex: number
+  colorIndex: number
+  isHovered: boolean
+  onHover: (number: number | null) => void
+  isMobile: boolean
 }
 
 const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
@@ -183,9 +214,7 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 }) => {
   const boxStyle = getScreenshotStyle(colorIndex)
   const Icon = step.icon
-  const screenshotStyle = SCREENSHOT_CONFIG.default
   const cardRef = useRef<HTMLDivElement | null>(null)
-  
 
   return (
     <div
@@ -215,16 +244,15 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
           }}
         >
           <div
-  ref={cardRef}
-  style={{
-    background: boxStyle.bg,
-    border: `2px solid ${boxStyle.border}`,
-    borderRadius: CONTAINER_CONFIG.borderRadius,
-    padding: CONTAINER_CONFIG.padding,
-    boxShadow: `0 4px 12px ${boxStyle.shadow}`,
-  }}
->
-
+            ref={cardRef}
+            style={{
+              background: boxStyle.bg,
+              border: `2px solid ${boxStyle.border}`,
+              borderRadius: CONTAINER_CONFIG.borderRadius,
+              padding: CONTAINER_CONFIG.padding,
+              boxShadow: `0 4px 12px ${boxStyle.shadow}`,
+            }}
+          >
             <div
               style={{
                 borderRadius: CONTAINER_CONFIG.innerBorderRadius,
@@ -251,35 +279,30 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
 
           {/* Hover Tooltip */}
           {isHovered && (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.96, y: isMobile ? 10 : 0 }}
-    animate={{ opacity: 1, scale: 1, y: 0 }}
-    exit={{ opacity: 0, scale: 0.96 }}
-    transition={{ duration: 0.25 }}
-    style={{
-      position: isMobile ? 'relative' : 'fixed',
-
-      /* ✅ MOBILE: same width as container */
-      width: isMobile ? '92%' : '300px',
-      maxWidth: '300px',
-
-      /* ✅ MOBILE positioning */
-      left: isMobile ? '4%' : '42%',
-      top: isMobile ? 'auto' : '35%',
-      transform: isMobile ? 'none' : 'translate(-50%, -50%)',
-      marginTop: isMobile ? '1rem' : '0',
-
-      background: 'rgba(15, 23, 42, 0.97)',
-      backdropFilter: 'blur(12px)',
-      borderRadius: '1.25rem',
-      padding: '1.25rem',
-      boxShadow: '0 15px 30px rgba(0,0,0,0.3)',
-      color: 'white',
-      zIndex: isMobile ? 5 : 999999,
-      pointerEvents: isMobile ? 'auto' : 'none',
-    }}
-  >
-               <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: isMobile ? 10 : 0 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.25 }}
+              style={{
+                position: isMobile ? 'relative' : 'fixed',
+                width: isMobile ? '92%' : '300px',
+                maxWidth: '300px',
+                left: isMobile ? '4%' : '42%',
+                top: isMobile ? 'auto' : '35%',
+                transform: isMobile ? 'none' : 'translate(-50%, -50%)',
+                marginTop: isMobile ? '1rem' : '0',
+                background: 'rgba(15, 23, 42, 0.97)',
+                backdropFilter: 'blur(12px)',
+                borderRadius: '1.25rem',
+                padding: '1.25rem',
+                boxShadow: '0 15px 30px rgba(0,0,0,0.3)',
+                color: 'white',
+                zIndex: isMobile ? 5 : 999999,
+                pointerEvents: isMobile ? 'auto' : 'none',
+              }}
+            >
+              <div
                 style={{
                   position: 'absolute',
                   top: '-12px',
@@ -343,6 +366,10 @@ const ScreenshotCard: React.FC<ScreenshotCardProps> = ({
   )
 }
 
+/* ======================
+   MAIN PAGE
+====================== */
+
 export default function TutorialPage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -350,7 +377,8 @@ export default function TutorialPage() {
 
   useEffect(() => {
     const link = document.createElement('link')
-    link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap'
+    link.href =
+      'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap'
     link.rel = 'stylesheet'
     document.head.appendChild(link)
 
@@ -368,7 +396,6 @@ export default function TutorialPage() {
     }
   }, [])
 
-  // Responsive styles
   const heroGridStyle = {
     display: 'grid',
     gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1.1fr 0.9fr',
@@ -376,7 +403,7 @@ export default function TutorialPage() {
     alignItems: 'center',
   }
 
-  const h1Style = {
+  const h1Style: React.CSSProperties = {
     fontFamily: '"Poppins", sans-serif',
     fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
     fontWeight: 700,
@@ -385,7 +412,7 @@ export default function TutorialPage() {
     letterSpacing: '-0.025em',
   }
 
-  const h2Style = {
+  const h2Style: React.CSSProperties = {
     fontFamily: '"Poppins", sans-serif',
     fontSize: isMobile ? '1.75rem' : isTablet ? '2rem' : '2.25rem',
     fontWeight: 700,
@@ -394,7 +421,7 @@ export default function TutorialPage() {
     lineHeight: isMobile ? '2.25rem' : isTablet ? '2.5rem' : '2.875rem',
   }
 
-  const h3Style = {
+  const h3Style: React.CSSProperties = {
     fontFamily: '"Poppins", sans-serif',
     fontSize: isMobile ? '1.5rem' : isTablet ? '1.75rem' : '1.75rem',
     fontWeight: 700,
@@ -450,17 +477,47 @@ export default function TutorialPage() {
             background: 'linear-gradient(135deg, #ecfeff 0%, #ffffff 50%, #ecfeff 100%)',
           }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
+          <div
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              width: '100%',
+              padding: isMobile ? '0 1rem' : '0 1.5rem',
+            }}
+          >
             <div style={heroGridStyle}>
               {/* LEFT: Text Content */}
               <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
-               
+                {/* Animated H1 line 1 */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0, ease: 'easeOut' }}
+                  style={h1Style}
+                >
+                  <motion.span
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                    style={{ color: 'rgb(6, 182, 212)', fontWeight: 900, display: 'block' }}
+                  >
+                    Explore Tally Connect
+                  </motion.span>
+                  <motion.span
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                    style={{ color: '#0F172A', display: 'block' }}
+                  >
+                    with Detailed Step-by-Step Tutorials
+                  </motion.span>
+                </motion.h1>
 
-                  <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore Tally Connect</span>{' '}
-                  <span style={{ color: '#0F172A' }}>with Detailed Step-by-Step Tutorials</span>
-                </h1>
-
-                <p
+                {/* Animated description */}
+                <motion.p
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
                   style={{
                     fontFamily: '"Inter", sans-serif',
                     fontSize: isMobile ? '0.9375rem' : '1rem',
@@ -470,19 +527,22 @@ export default function TutorialPage() {
                     lineHeight: '1.625rem',
                   }}
                 >
-                  Learn how to streamline operations, boost productivity, and scale faster with comprehensive tutorials
-                  covering setup, configuration, and advanced features.
-                </p>
+                  Learn how to streamline operations, boost productivity, and scale faster with
+                  comprehensive tutorials covering setup, configuration, and advanced features.
+                </motion.p>
 
-                {/* Feature List */}
+                {/* Feature List — each item staggered after the description */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {[
                     'Quick start guides for instant setup',
                     'Advanced feature walkthroughs',
                     'How it works steps for smooth onboarding',
-                  ].map((feature) => (
-                    <div
+                  ].map((feature, index) => (
+                    <motion.div
                       key={feature}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.4 + index * 0.1, ease: 'easeOut' }}
                       style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
                     >
                       <div
@@ -498,7 +558,13 @@ export default function TutorialPage() {
                           flexShrink: 0,
                         }}
                       >
-                        <CheckCircle style={{ width: isMobile ? '1rem' : '1.25rem', height: isMobile ? '1rem' : '1.25rem', color: 'rgb(6, 182, 212)' }} />
+                        <CheckCircle
+                          style={{
+                            width: isMobile ? '1rem' : '1.25rem',
+                            height: isMobile ? '1rem' : '1.25rem',
+                            color: 'rgb(6, 182, 212)',
+                          }}
+                        />
                       </div>
                       <span
                         style={{
@@ -511,40 +577,43 @@ export default function TutorialPage() {
                       >
                         {feature}
                       </span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* RIGHT: Video Card */}
-            
-                <motion.div
-                  style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
-                  transition={{
-                    duration: 3,
-                    repeat: isMobile ? 0 : Infinity,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  <TutorialVideo />
-                </motion.div>
-              
+              <motion.div
+                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                animate={{ y: isMobile ? 0 : [0, -12, 0] }}
+                transition={{
+                  duration: 3,
+                  repeat: isMobile ? 0 : Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                <TutorialVideo isMobile={isMobile} />
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* Tutorial Section Header */}
         <section
-          style={{ 
-            padding: isMobile ? '1.5rem 1rem' : '2rem 1.5rem 1.5rem', 
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)' 
+          style={{
+            padding: isMobile ? '1.5rem 1rem' : '2rem 1.5rem 1.5rem',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc)',
           }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
-            <h2 style={h2Style}>
-              Complete Step-by-Step Guide
-            </h2>
+          <div
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              textAlign: 'center',
+              padding: isMobile ? '0 1rem' : '0 1.5rem',
+            }}
+          >
+            <h2 style={h2Style}>Complete Step-by-Step Guide</h2>
 
             <p
               style={{
@@ -557,27 +626,32 @@ export default function TutorialPage() {
                 fontWeight: 400,
               }}
             >
-              Master Tally Connect with our comprehensive guide covering every feature from sign-up to advanced functionality
+              Master Tally Connect with our comprehensive guide covering every feature from sign-up
+              to advanced functionality
             </p>
           </div>
         </section>
 
         {/* Tutorial Cards Section */}
         <section style={{ padding: isMobile ? '1rem' : '1.5rem 1.5rem 2rem' }}>
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: isMobile ? '0 1rem' : '0 1.5rem' }}>
-            {/* Top Row: Section 1 + Section 2 Step 2 */}
+          <div
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              padding: isMobile ? '0 1rem' : '0 1.5rem',
+            }}
+          >
+            {/* Top Row: Section 1 + Section 2 */}
             <div style={topRowGridStyle}>
               {/* Section 1 */}
               {(() => {
-                const section1 = tutorialSections.find(s => s.sectionId === 1)!
+                const section1 = tutorialSections.find((s) => s.sectionId === 1)!
                 const step1 = section1.steps[0]
 
                 return (
                   <div key="section1" style={{ display: 'flex', flexDirection: 'column' }}>
                     <div style={{ marginBottom: '1.5rem', minHeight: isMobile ? 'auto' : '120px' }}>
-                      <h3 style={h3Style}>
-                        {section1.sectionTitle}
-                      </h3>
+                      <h3 style={h3Style}>{section1.sectionTitle}</h3>
                       <p
                         style={{
                           fontFamily: '"Inter", sans-serif',
@@ -604,17 +678,15 @@ export default function TutorialPage() {
                 )
               })()}
 
-              {/* Section 2 Step 2 */}
+              {/* Section 2 */}
               {(() => {
-                const section2 = tutorialSections.find(s => s.sectionId === 2)!
-                const step2 = section2.steps.find(s => s.number === 2)!
+                const section2 = tutorialSections.find((s) => s.sectionId === 2)!
+                const step2 = section2.steps[0]
 
                 return (
-                  <div key="section2-step2" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div key="section2" style={{ display: 'flex', flexDirection: 'column' }}>
                     <div style={{ marginBottom: '1.5rem', minHeight: isMobile ? 'auto' : '120px' }}>
-                      <h3 style={h3Style}>
-                        {section2.sectionTitle}
-                      </h3>
+                      <h3 style={h3Style}>{section2.sectionTitle}</h3>
                       <p
                         style={{
                           fontFamily: '"Inter", sans-serif',
@@ -642,33 +714,9 @@ export default function TutorialPage() {
               })()}
             </div>
 
-            {/* Section 2 Remaining Steps */}
-            {(() => {
-              const section2 = tutorialSections.find(s => s.sectionId === 2)!
-              const remainingSteps = section2.steps.filter(s => s.number !== 2)
-
-              return (
-                <div key="section2-remaining" style={{ marginBottom: '3rem' }}>
-                  <div style={cardsGridStyle}>
-                    {remainingSteps.map((step, stepIndex) => (
-                      <ScreenshotCard
-                        key={step.number}
-                        step={step}
-                        stepIndex={stepIndex}
-                        colorIndex={step.number}
-                        isHovered={hoveredCard === step.number}
-                        onHover={setHoveredCard}
-                        isMobile={isMobile}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )
-            })()}
-
-            {/* Remaining Sections */}
+            {/* Remaining Sections (3 onwards) */}
             {tutorialSections
-              .filter(section => section.sectionId !== 1 && section.sectionId !== 2)
+              .filter((section) => section.sectionId !== 1 && section.sectionId !== 2)
               .map((section) => {
                 const stepsToRender = section.steps
                 if (stepsToRender.length === 0) return null
@@ -678,9 +726,7 @@ export default function TutorialPage() {
                 return (
                   <div key={section.sectionId} style={{ marginBottom: '3rem' }}>
                     <div style={{ marginBottom: '1.5rem' }}>
-                      <h3 style={h3Style}>
-                        {section.sectionTitle}
-                      </h3>
+                      <h3 style={h3Style}>{section.sectionTitle}</h3>
                       <p
                         style={{
                           fontFamily: '"Inter", sans-serif',
@@ -694,18 +740,28 @@ export default function TutorialPage() {
                       </p>
                     </div>
 
-                    <div style={isSingleCard ? {
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    } : cardsGridStyle}>
+                    <div
+                      style={
+                        isSingleCard
+                          ? {
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }
+                          : cardsGridStyle
+                      }
+                    >
                       {stepsToRender.map((step, stepIndex) => (
-                        <div 
+                        <div
                           key={step.number}
-                          style={isSingleCard ? {
-                            width: isMobile ? '100%' : isTablet ? '80%' : '50%',
-                            maxWidth: '100%',
-                          } : {}}
+                          style={
+                            isSingleCard
+                              ? {
+                                  width: isMobile ? '100%' : isTablet ? '80%' : '50%',
+                                  maxWidth: '100%',
+                                }
+                              : {}
+                          }
                         >
                           <ScreenshotCard
                             step={step}
@@ -735,7 +791,9 @@ export default function TutorialPage() {
           }}
         >
           <button
-            onClick={() => (window.location.href = 'https://frontend-8x7e.onrender.com/')}
+            onClick={() =>
+              (window.location.href = 'https://frontend-8x7e.onrender.com/')
+            }
             style={{
               fontFamily: '"Poppins", sans-serif',
               padding: isMobile ? '1rem 2rem' : '1.25rem 3.5rem',
@@ -766,7 +824,12 @@ export default function TutorialPage() {
             }}
           >
             Go to Dashboard
-            <ArrowRight style={{ width: isMobile ? '1.25rem' : '1.6rem', height: isMobile ? '1.25rem' : '1.6rem' }} />
+            <ArrowRight
+              style={{
+                width: isMobile ? '1.25rem' : '1.6rem',
+                height: isMobile ? '1.25rem' : '1.6rem',
+              }}
+            />
           </button>
         </div>
 
@@ -774,4 +837,4 @@ export default function TutorialPage() {
       </div>
     </div>
   )
-} 
+}
