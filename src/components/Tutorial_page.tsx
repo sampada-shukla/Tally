@@ -408,12 +408,17 @@ export default function TutorialPage() {
   // Flat list of all steps in render order — used to map each card to a unique palette index
   const allStepsOrdered = tutorialSections.flatMap((s) => s.steps)
   const getColorIndex = (stepNumber: number) =>
-    allStepsOrdered.findIndex((s) => s.number === stepNumber)
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1.1fr 0.9fr',
-    gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-    alignItems: 'center',
-  }
+    const heroGridStyle: React.CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: isMobile
+    ? '1fr'
+    : isTablet
+    ? '1fr'
+    : '1.1fr 0.9fr',
+  gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+  alignItems: 'center',
+}
+
 
   const h1Style: React.CSSProperties = {
     fontFamily: '"Poppins", sans-serif',
