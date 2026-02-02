@@ -1,3 +1,4 @@
+
 import { motion } from 'motion/react'
 import { useState, useEffect, useRef } from 'react'
 import {
@@ -420,7 +421,7 @@ const heroGridStyle: React.CSSProperties = {
     : isTablet
     ? '1fr'
     : '1.1fr 0.9fr',
-  gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
+  gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '6rem',
   alignItems: 'center',
 }
 
@@ -507,7 +508,7 @@ const h3Style: React.CSSProperties = {
           >
             <div style={heroGridStyle}>
               {/* LEFT: Text Content */}
-              <div style={{ maxWidth: isMobile ? '100%' : '650px' }}>
+              <div style={{ maxWidth: isMobile ? '100%' : '600px' }}>
                 {/* Animated H1 */}
                 <motion.h1
                   initial={{ opacity: 0, x: -40 }}
@@ -515,22 +516,9 @@ const h3Style: React.CSSProperties = {
                   transition={{ duration: 0.7, delay: 0, ease: [0.25, 0.46, 0.45, 0.94] }}
                   style={h1Style}
                 >
-                  <motion.span
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    style={{ color: 'rgb(6, 182, 212)', fontWeight: 900, display: 'block' }}
-                  >
-                    Explore Tally Connect
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    style={{ color: '#0F172A', display: 'block' }}
-                  >
-                    with Detailed Step-by-Step Tutorials
-                  </motion.span>
+                 
+                   <span style={{ color: 'rgb(6, 182, 212)', fontWeight: 900 }}>Explore Tally Connect</span>{' '}
+                  <span style={{ color: '#0F172A' }}>with Detailed Step-by-Step Tutorials</span>
                 </motion.h1>
 
                 {/* Animated description */}
@@ -603,19 +591,32 @@ const h3Style: React.CSSProperties = {
               </div>
 
               {/* RIGHT: Video Card */}
-              <motion.div
-                style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-                animate={{ y: isMobile ? 0 : [0, -12, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: isMobile ? 0 : Infinity,
-                  ease: 'easeInOut',
-                }}
-              >
-                <TutorialVideo isMobile={isMobile} />
-              </motion.div>
-            </div>
-          </div>
+               <motion.div
+  animate={{ y: isMobile ? 0 : [0, -12, 0] }}
+  transition={{
+    duration: 3,
+    repeat: isMobile ? 0 : Infinity,
+    ease: 'easeInOut',
+  }}
+  style={{
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  }}
+>
+  {/* FIXED WIDTH WRAPPER */}
+  <div
+    style={{
+      width: '100%',
+      maxWidth: '900px',   
+      aspectRatio: '16 / 9',
+    }}
+  >
+    <TutorialVideo />
+  </div>
+</motion.div>
+</div> 
+          </div>  
         </section>
 
         {/* Tutorial Section Header */}
