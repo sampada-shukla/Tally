@@ -92,6 +92,12 @@ const tutorialSections: TutorialSection[] = [
         icon: Shield,
         iconColor: '#1976D2',
         image: login_page,
+        details: [
+          'Simple registration process',
+          'License activation setup',
+          'Secure credential configuration',
+          'Access to main dashboard',
+        ],
       },
     ],
   },
@@ -109,6 +115,12 @@ const tutorialSections: TutorialSection[] = [
         icon: Users,
         iconColor: '#673AB7',
         image: dashboard_page,
+        details: [
+          'Agent download and installation',
+          'Guided setup process',
+          'Secure authentication',
+          'System connection setup',
+        ],
       },
     ],
   },
@@ -125,6 +137,12 @@ const tutorialSections: TutorialSection[] = [
         icon: HardDrive,
         iconColor: '#0288D1',
         image: dashboard_page,
+        details: [
+          'Secure data synchronization',
+          'Automatic information updates',
+          'Cloud-based dashboard access',
+          'Reliable data transfer process',
+        ],
       },
       {
         number: 10,
@@ -134,6 +152,12 @@ const tutorialSections: TutorialSection[] = [
         icon: ArrowRight,
         iconColor: '#455A64',
         image: login_page,
+        details: [
+          'Automatic login redirection',
+          'Secure user authentication',
+          'Role-based access control',
+          'Personalized dashboard access',
+        ],
       },
     ],
   },
@@ -151,6 +175,12 @@ const tutorialSections: TutorialSection[] = [
         icon: Users,
         iconColor: '#6A1B9A',
         image: user_management_page,
+        details: [
+          'Centralized user overview',
+          'User status visibility',
+          'Access monitoring',
+          'User management controls',
+        ],
       },
       {
         number: 12,
@@ -160,6 +190,12 @@ const tutorialSections: TutorialSection[] = [
         icon: UserPlus,
         iconColor: '#1976D2',
         image: add_user,
+        details: [
+          'Add new user profiles',
+          'Basic employee information setup',
+          'Temporary credential assignment',
+          'Secure account creation',
+        ],
       },
       {
         number: 13,
@@ -169,6 +205,12 @@ const tutorialSections: TutorialSection[] = [
         icon: UserCheck,
         iconColor: '#2E7D32',
         image: user_created,
+        details: [
+          'Role assignment options',
+          'Permission configuration',
+          'Access level control',
+          'Dashboard visibility management',
+        ],
       },
       {
         number: 14,
@@ -178,6 +220,12 @@ const tutorialSections: TutorialSection[] = [
         icon: Settings,
         iconColor: '#EF6C00',
         image: save_changes,
+        details: [
+          'Widget access control',
+          'Toggle-based settings',
+          'Custom dashboard visibility',
+          'Flexible configuration options',
+        ],
       },
       {
         number: 15,
@@ -187,11 +235,16 @@ const tutorialSections: TutorialSection[] = [
         icon: CheckCircle,
         iconColor: '#4CAF50',
         image: permission_page,
+        details: [
+          'Save configuration updates',
+          'Instant permission enforcement',
+          'Role-based visibility applied',
+          'Secure access confirmation',
+        ],
       },
     ],
   },
-]
-
+];
 // Floating Navigation Buttons Component
 const FloatingNavButtons = ({ onScrollToTop, onScrollToBottom, showTop, showBottom }) => {
   return (
