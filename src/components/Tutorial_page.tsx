@@ -1381,7 +1381,7 @@ export default function TutorialPage() {
                     lineHeight: isMobile ? '22px' : '26px',
                   }}
                 >
-                  Learn how to streamline meetings, boost collaboration, and scale faster with comprehensive tutorials
+                  Learn how to streamline operations, boost collaboration, and scale faster with tutorials
                   covering setup, configuration, and advanced features.
                 </motion.p>
 
