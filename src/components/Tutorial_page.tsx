@@ -371,44 +371,49 @@ const ScrollingStoryStep = ({ step, isMobile, isTablet, activeImageIndex, stepIn
       }
     };
   }, []);
-     // Close popup when step goes out of view (scrolling to next/previous step)
+     // Mobile popup handling with scroll threshold
 useEffect(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      // Close popup when step is less than 30% visible
-      if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
-        setShowPopup(false);
-      }
-    },
-    { threshold: [0.3, 0.5, 0.7] } // Multiple thresholds for smooth detection
-  );
+  if (!isMobile) return;
 
-  if (stepRef.current) {
-    observer.observe(stepRef.current);
-  }
+  let lastScrollY = window.scrollY;
+  const scrollThreshold = 50; // pixels scrolled before closing
 
-  return () => {
-    if (stepRef.current) {
-      observer.unobserve(stepRef.current);
-    }
-  };
-}, []);
-
-// Close popup when clicking outside (keep this one)
-useEffect(() => {
-  if (!showPopup) return;
-
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (event) => {
     if (
+      showPopup &&
       imageRef.current &&
       popRef.current &&
-      !imageRef.current.contains(event.target as Node) &&
-      !popRef.current.contains(event.target as Node)
+      !imageRef.current.contains(event.target) &&
+      !popRef.current.contains(event.target)
     ) {
       setShowPopup(false);
     }
   };
 
+  const handleScroll = () => {
+    if (showPopup) {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+      
+      if (scrollDelta > scrollThreshold) {
+        setShowPopup(false);
+      }
+    }
+  };
+
+  if (showPopup) {
+    lastScrollY = window.scrollY; // Set initial scroll position when popup opens
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    window.addEventListener('scroll', handleScroll, true);
+  }
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+    document.removeEventListener('touchstart', handleClickOutside);
+    window.removeEventListener('scroll', handleScroll, true);
+  };
+}, [showPopup, isMobile]);
   const imageOnLeft = step.number % 2 === 1;
 
   const imageX = useTransform(
@@ -1376,7 +1381,7 @@ export default function TutorialPage() {
                     lineHeight: isMobile ? '22px' : '26px',
                   }}
                 >
-                  Learn how to streamline operations, boost collaboration, and scale faster with tutorials
+                  Learn how to streamline meetings, boost collaboration, and scale faster with comprehensive tutorials
                   covering setup, configuration, and advanced features.
                 </motion.p>
 
