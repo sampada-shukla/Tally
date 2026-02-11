@@ -1322,7 +1322,6 @@ export default function TutorialPage() {
                 style={{
                   maxWidth: isMobile ? '100%' : '650px',
                   marginTop: isMobile ? '0' : '-2.5rem',
-                  marginLeft: isMobile ? '0' : '-3rem'
                 }}
               >
                 <motion.h1
@@ -1522,7 +1521,7 @@ export default function TutorialPage() {
     margin: '1.25rem auto 0',
     maxWidth: 'fit-content',
 
-    // 👇 BOX STYLES
+    // BOX STYLES
     background:
       'linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.12))',
     border: '1.5px solid rgba(6,182,212,0.35)',
