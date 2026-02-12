@@ -810,76 +810,42 @@ useEffect(() => {
                 >
   <Icon color="white" size={isMobile ? 20 : 24} strokeWidth={2.5} />
 </div>
-
-                <h4
-                  style={{
-                    fontSize: isMobile ? '1.1rem' : '1.25rem',
-                    fontWeight: 700,
-                    marginBottom: '0.6rem',
-                    fontFamily: '"Poppins", sans-serif',
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {step.title}
-                </h4>
-
-                <p
-                  style={{
-                    fontSize: isMobile ? '0.9rem' : '0.95rem',
-                    color: 'rgba(255,255,255,0.9)',
-                    lineHeight: 1.6,
-                    fontFamily: '"Inter", sans-serif',
-                  }}
-                >
-                  {step.description}
-                </p>
-
-                {/*{step.details && (
-                  <ul
-                    style={{
-                      marginTop: '1rem',
-                      paddingLeft: '0',
-                      listStyle: 'none',
-                    }}
-                  >
-                    {step.details.map((d, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        style={{
-                          fontSize: isMobile ? '0.8rem' : '0.85rem',
-                          color: 'rgba(255,255,255,0.8)',
-                          marginBottom: '0.5rem',
-                          fontFamily: '"Inter", sans-serif',
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: '0.5rem',
-                        }}
-                      >
-                        <Zap size={14} color={step.iconColor} style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <span>{d}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                )}*/}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Text Side - Enhanced */}
-        <motion.div
-          style={{
-            x: isMobile ? 0 : textX,
-            opacity: textOpacity,
-            order: isMobile ? 2 : imageOnLeft ? 2 : 1,
-            position: 'relative',
-            marginLeft: !isMobile && imageOnLeft ? '4rem' : '0',
-            marginRight: !isMobile && !imageOnLeft ? '4rem' : '0',
-          }}
-        >
+<h4
+  style={{
+  fontSize: isMobile ? '1.1rem' : '1.25rem',
+  fontWeight: 700,
+  marginBottom: '0.6rem',
+  fontFamily: '"Poppins", sans-serif',
+  lineHeight: 1.3,
+  }}
+>
+{step.title}
+</h4>
+<p
+style={{
+fontSize: isMobile ? '0.9rem' : '0.95rem',
+color: 'rgba(255,255,255,0.9)',
+lineHeight: 1.6,
+fontFamily: '"Inter", sans-serif',
+}}
+>
+{step.description}
+</p>
+</motion.div>
+)}
+</AnimatePresence>
+</motion.div>
+{/* Text Side - Enhanced */}
+<motion.div
+  style={{
+  x: isMobile ? 0 : textX,
+  opacity: textOpacity,
+  order: isMobile ? 2 : imageOnLeft ? 2 : 1,
+  position: 'relative',
+  marginLeft: !isMobile && imageOnLeft ? '4rem' : '0',
+  marginRight: !isMobile && !imageOnLeft ? '4rem' : '0',
+  }}
+  >
   <motion.div
   initial={{ opacity: 0, y: 20 }}
   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -887,7 +853,7 @@ useEffect(() => {
   transition={{ type: 'spring', stiffness: 260, damping: 22 }}
   style={{
     background:
-      'linear-gradient(135deg, rgba(255,255,255,0.65), rgba(248,250,252,0.55))',
+    'linear-gradient(135deg, rgba(255,255,255,0.65), rgba(248,250,252,0.55))',
     padding: isMobile ? '1.6rem' : '2rem',
     borderRadius: '20px',
     border: '1px solid rgba(255, 255, 255, 0.35)',
@@ -904,8 +870,7 @@ useEffect(() => {
 
   }}
 >
-
-            {/* Animated corner decoration */}
+    {/* Animated corner decoration */}
             <motion.div
               animate={{
                 rotate: [0, 90, 180, 270, 360],
@@ -1007,7 +972,7 @@ useEffect(() => {
               </div>
 
               {/* Large step number - UPDATED to match reference */}
-              <motion.div
+  <motion.div
   whileHover={{ scale: 1.1 }}
   style={{
     width: isMobile ? '52px' : '64px',
@@ -1032,7 +997,6 @@ useEffect(() => {
   {step.number}
 </motion.div>
             </div>
-
             {/* Title */}
             <h4
               style={{
@@ -1048,21 +1012,6 @@ useEffect(() => {
             >
               {step.title}
             </h4>
-
-            {/* Description */}
-           {/*<p
-              style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: isMobile ? '15px' : '16px',
-                color: 'rgb(71, 85, 105)',
-                lineHeight: 1.7,
-                marginBottom: step.details ? '1.25rem' : '0',
-                position: 'relative',
-                zIndex: 1,
-              }}
-            >
-              {step.description}
-            </p>*/}
 
             {/* Details */}
             {step.details && (
@@ -1277,33 +1226,7 @@ export default function TutorialPage() {
                 alignItems: isMobile ? "start" : "Center",
               }}
             >
-              {/* Logo - appears first on mobile */}
-              {/*{isMobile && (
-                <motion.div
-                  initial={{ opacity: 0, x: -40 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.7, delay: 0.05 }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'start',
-                    justifyContent: 'flex-start',
-                    marginBottom: '1rem',
-                    
-                  }}
-                >
-                  <img
-                    src={logoImage}
-                    alt="WorkEye Logo"
-                    style={{
-                      width: '6rem',
-                      height: 'auto',
-                      objectFit: 'contain',
-                    }}
-                  />
-                </motion.div>
-              )}*/}
-
-              {/* Video - appears second on mobile */}
+               {/* Video - appears second on mobile */}
               {isMobile && (
                 <motion.div
                   style={{ 
@@ -1351,15 +1274,6 @@ export default function TutorialPage() {
                         marginBottom: '1.5rem',
                       }}
                     >
-                      {/*<img
-                        src={logoImage}
-                        alt="MeetHub Logo"
-                        style={{
-                          width: isTablet ? '6rem' : '8rem',
-                          height: 'auto',
-                          objectFit: 'contain',
-                        }}
-                      />*/}
                     </motion.div>
                   )}
 
@@ -1533,10 +1447,10 @@ export default function TutorialPage() {
   }}
 >
 <motion.div 
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  rotate: [0, 5, -5, 0]
-                }}
+      animate={{ 
+      scale: [1, 1.05, 1],
+      rotate: [0, 5, -5, 0]
+    }}
                 transition={{ 
                   duration: 3,
                   repeat: Infinity,
@@ -1593,7 +1507,7 @@ export default function TutorialPage() {
         {/* Scrolling Story Steps */}
         <section
           style={{
-           background: 'linear-gradient(180deg, #f0fbff 0%, #f8fafc 100%)',
+           background: '#f0fdff',
 
             position: 'relative',
           }}
