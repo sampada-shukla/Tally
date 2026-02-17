@@ -1,7 +1,7 @@
 import { Clock, Check, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 
-export const EnhancedVideoCard = () => {
+export const TutorialVideo = () => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -282,7 +282,7 @@ export const EnhancedVideoCard = () => {
         </motion.button>
       </div>
 
-      <style jsx>{`
+      <style >{`
         .shimmer-effect {
           animation: shimmer 3s infinite;
         }
@@ -367,4 +367,4 @@ export const EnhancedVideoCard = () => {
   )
 }
 
-export default EnhancedVideoCard
+export default TutorialVideo
